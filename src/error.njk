@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>Ошибка</title>
+    {% include 'blocks/head.njk' %}
+</head>
+
+<body class="preload mp">
+    <div class="main-wrapper-outer">
+        {% include 'blocks/header.njk' %}
+        <main class="main">
+
+            <div class="block-tecnical">
+                <div class="block-tecnical__body">
+                    <div class="block-tecnical__text">
+                        <div class="block-tecnical__icon">
+                            <span>
+                                <svg aria-hidden="true" width="4" height="10">
+                                    <use xlink:href="img/sprite.svg#exclamation-mark"></use>
+                                </svg>
+                            </span>
+                        </div>
+                        <p>
+                            OOPS! THE PAGE YOU ARE LOOKING FOR DOESN’T EXIST
+                        </p>
+                    </div>
+                    <a href="./" class="btn">
+                        <span>GO BACK</span>
+                    </a>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    {% include 'blocks/scripts.njk' %}
+</body>
+
+</html>
