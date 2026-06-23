@@ -93,4 +93,37 @@ a {
   &:hover {
     opacity: 0.7;
   }
+  @media (max-width: 370px) {
+    padding: 5px 10px;
+  }
+}
+
+.arrow {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #f6f6f5;
+  svg {
+    transition: transform 0.3s;
+    fill: none;
+    stroke: #483730;
+    color: #483730;
+    margin: 0px 0px -2px 0px;
+  }
+}
+
+.title1 {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 110%;
+  text-transform: uppercase;
+  text-align: right;
+  color: #fff;
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 }

@@ -8,97 +8,325 @@
 
 <body class="preload mp">
     <div class="main-wrapper-outer">
+        {% include 'blocks/header.njk' %}
         <main class="main">
 
-            <div class="block-banner">
-                <img src="img/image1.webp" alt="" class="block-banner__bg1">
-                <img src="img/image1-mob.webp" alt="" class="block-banner__bg2">
+            <div class="block-text">
                 <div class="container">
-                    <div class="block-banner__content">
-                        <a href="./" class="block-banner__logo">
-                            <img src="img/icons/logo1.svg" alt="">
-                        </a>
-                        <div class="block-banner__body">
-                            <div class="block-banner__top">
-                                <h1 class="title1">
-                                    A Global Platform Empowering Women with Vision, Integrity, and Purpose
-                                </h1>
-                                <p>
-                                    EVENTS | BUSINESS | NETWORKING | LEARNING
-                                </p>
-                            </div>
-                            <div class="block-banner__bottom">
-                                <div class="block-banner__items">
-                                    <div class="block-banner-left">
-                                        <div class="block-banner-left__column">
-                                            <div class="block-banner-left__image">
-                                                <img src="img/image2.webp" alt="">
+                    <div class="block-text__content">
+                        <h1 class="title1">
+                            A Global Platform Empowering Women with Vision, Integrity, and Purpose
+                        </h1>
+                        <p>
+                            EVENTS | BUSINESS | NETWORKING | LEARNING
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block-section">
+                <div class="container">
+                    <div class="block-section__content">
+                        <div class="block-section-menu">
+                            <ul>
+                                <li>
+                                    <button data-filter="experts" type="button"
+                                        class="block-section-menu__button">ExpertS</button>
+                                </li>
+                                <li>
+                                    <button data-filter="events" type="button"
+                                        class="block-section-menu__button">EVENTS</button>
+                                </li>
+                                <li>
+                                    <button data-filter="academy" type="button"
+                                        class="block-section-menu__button active">ACADEMY</button>
+                                </li>
+                            </ul>
+                            <button type="button" class="arrow">
+                                <svg aria-hidden="true" width="9" height="6">
+                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                </svg>
+                            </button>
+                        </div>
+                        <div data-simplebar class="block-section__body">
+                            <div data-filter="experts" class="block-section__cards">
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                PSYCHOLOGIST<br>
+                                                PROF-ORIENTOLOGIST
                                             </div>
-                                            <div class="block-banner-left__items">
-                                                <div class="block-banner-left__item">
-                                                    <div class="block-banner-left__titles">
-                                                        <div class="block-banner-left__title">
-                                                            RED DIAMOND AWARDS<br>
-                                                            THE 6tH ELEMENT
-                                                        </div>
-                                                        <span>#COMING SOON</span>
-                                                    </div>
-                                                    <div class="block-banner-left__data">
-                                                        2026
-                                                    </div>
-                                                </div>
-                                                <div class="block-banner-left__item">
-                                                    <div class="block-banner-left__text">
-                                                        RESERVE TICKETS<br>
-                                                        BECOME A PARTNER
-                                                    </div>
-                                                    <a href="https://wa.link/ikmqxn" class="block-banner-left__arrow">
-                                                        <img src="img/icons/arrow1.svg" alt="">
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <p>
+                                                ANNA SHCHEGOLEVA
+                                            </p>
                                         </div>
-                                        <div class="block-banner-left__column column2">
-                                            <div class="block-banner-left__items">
-                                                <div class="block-banner-left__item">
-                                                    <div class="block-banner-left__titles">
-                                                        <div class="block-banner-left__title">
-                                                            WE’RE CREATING SOMETHING<br>
-                                                            TRULY EXCITING ON THIS WEBSITE
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="block-banner-left__item">
-                                                    <div class="block-banner-left__text">
-                                                        BE THE FIRST TO FIND OUT
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                10 YEARS EXP<br>
+                                                LICENSED EXPERT
+                                            </p>
+                                            <a href="https://www.instagram.com/impulse__up" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
                                         </div>
                                     </div>
-                                    <div class="block-banner-right">
-                                        <div class="block-banner-right__copy">
-                                            <img src="img/icons/copyright.svg" alt="">
-                                            <span>RED DIAMOND 2026</span>
-                                        </div>
-                                        <div class="block-banner-right__item">
-                                            <div class="block-banner-right__text">
-                                                SUPPORTED BY
+                                    <div class="card-section__image">
+                                        <img src="img/expert1.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                International<br>
+                                                lawyer
                                             </div>
-                                            <img src="img/icons/logo2.svg" alt="">
-                                            <a href="https://www.instagram.com/georgy_shchegolev"
-                                                class="block-banner-right__text">
-                                                WEBSITE BY
-                                                <br>
-                                                LIFE & LUXURY
+                                            <p>
+                                                YIANNOS GEORGIADES
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                35 YEARS EXP<br>
+                                                LICENSED EXPERT
+                                            </p>
+                                            <a href="https://www.instagram.com/yiannosgeorgiades" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/expert2.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                Strategic financial<br> leader & entrepreneur
+                                            </div>
+                                            <p>
+                                                HASMIG MEDIAN
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                10 YEARS EXP<br>
+                                                LICENSED EXPERT
+                                            </p>
+                                            <a href="https://www.instagram.com/_hm____85" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/expert3.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                HR & Business Solutions for companies and people
+                                            </div>
+                                            <p>
+                                                Marianna Hadjiandoniou
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                10 YEARS EXP<br>
+                                                LICENSED EXPERT
+                                            </p>
+                                            <a href="https://www.instagram.com/bizandlove_lady" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/expert4.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                HOLISTIC BUSINESS<br>
+                                                CONSULTANT & MENTOR
+                                            </div>
+                                            <p>
+                                                Dr. Branka van der Linden
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                10 YEARS EXP<br>
+                                                LICENSED EXPERT
+                                            </p>
+                                            <a href="https://www.instagram.com/brankavdlinden" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/expert5.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section card-section-last">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                BECOME AN EXPERT?
+                                            </div>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                JOIN OUR TEAM OF EXPERTS AND SHARE<br> YOUR INSIGHTS WITH THE WORLD!
+                                            </p>
+                                            <a href="https://wa.link/p0r4ft" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="block-banner__text">
-                                    This website is under development. No cookies or tracking technologies are currently
-                                    in
-                                    use.
+                            </div>
+                            <div data-filter="events" class="block-section__cards">
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                RED DIAMONd AWARDS<br>
+                                                THE 6TH ELEMENT
+                                            </div>
+                                            <p>
+                                                #AWARDS #GALAEVENING
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                RESERVE TICKETS<br>
+                                                BECOME A PARTNER
+                                            </p>
+                                            <a href="https://wa.link/zhgaf9" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/image2.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                RED DIAMONd INTL.<br>
+                                                BUSINESSWOMEN AWARDS
+                                            </div>
+                                            <p>
+                                                #NETWORKING
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                RESERVE TICKETS<br>
+                                                BECOME A PARTNER
+                                            </p>
+                                            <a href="https://wa.link/zhgaf9" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/image3.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                POWER OF SHE
+                                            </div>
+                                            <p>
+                                                #BUSINESS #NETWORKING
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                RESERVE TICKETS<br>
+                                                BECOME A PARTNER
+                                            </p>
+                                            <a href="https://wa.link/zhgaf9" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/image4.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section card-section-last">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                PLANNING AN EVENT?
+                                            </div>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                WE OFFER A BESPOKE EVENT PLANNING<br>
+                                                AND ORGANISATION SERVICE
+                                            </p>
+                                            <a href="https://wa.link/zhgaf9" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-filter="academy" class="block-section__cards active">
+                                <div class="card-section card-section-academy">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                SOMETHING GREAT<br>
+                                                IS BEING CREATED HERE!
+                                            </div>
+                                            <div class="card-section__icon">
+                                                <span>
+                                                    <svg aria-hidden="true" width="4" height="10">
+                                                        <use xlink:href="img/sprite.svg#exclamation-mark"></use>
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                be the first to find out!
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +335,9 @@
             </div>
 
         </main>
+        {% include 'blocks/footer.njk' %}
     </div>
+    {% include 'blocks/scripts.njk' %}
 </body>
 
 </html>
