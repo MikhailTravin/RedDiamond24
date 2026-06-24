@@ -719,30 +719,32 @@ if (menuContainer) {
         }
     }
 
-    arrowButton.addEventListener('click', function () {
-        menuContainer.classList.toggle('active');
+    if (arrowButton) {
+        arrowButton.addEventListener('click', function () {
+            menuContainer.classList.toggle('active');
 
-        const buttonsToToggle = [];
-        allButtons.forEach(button => {
-            if (!button.classList.contains('active')) {
-                buttonsToToggle.push(button);
+            const buttonsToToggle = [];
+            allButtons.forEach(button => {
+                if (!button.classList.contains('active')) {
+                    buttonsToToggle.push(button);
+                }
+            });
+
+            if (menuContainer.classList.contains('active')) {
+                buttonsToToggle.forEach(button => {
+                    if (button.style.display === 'none' || !button.style.display) {
+                        slideDown(button);
+                    }
+                });
+            } else {
+                buttonsToToggle.forEach(button => {
+                    if (button.style.display !== 'none' && button.style.display !== '') {
+                        slideUp(button);
+                    }
+                });
             }
         });
-
-        if (menuContainer.classList.contains('active')) {
-            buttonsToToggle.forEach(button => {
-                if (button.style.display === 'none' || !button.style.display) {
-                    slideDown(button);
-                }
-            });
-        } else {
-            buttonsToToggle.forEach(button => {
-                if (button.style.display !== 'none' && button.style.display !== '') {
-                    slideUp(button);
-                }
-            });
-        }
-    });
+    }
 
     function initMobileMenu() {
         if (window.innerWidth <= 768) {
@@ -845,5 +847,207 @@ if (menuButtons) {
                 setActiveFilter(filter);
             }
         }
+    });
+}
+
+//========================================================================================================================================================
+
+const galleryItems = document.querySelectorAll('.card-section__item');
+const productCard = document.querySelectorAll('.card-section__images');
+
+if (galleryItems) {
+    galleryItems.forEach(item => {
+        item.addEventListener("mouseenter", function (e) {
+            let child_count = this.parentNode.children.length;
+            let child_arr = [];
+            for (let i = 0; i < child_count; i++) {
+                child_arr.push(this.parentNode.children[i]);
+            }
+            let filter_child_arr = [];
+            for (let i = 0; i < child_count; i++) {
+                let curr_child = this.parentNode.children[i];
+                if (curr_child !== this)
+                    filter_child_arr.push(curr_child);
+                curr_child.classList.remove("active")
+            }
+            this.classList.add("active")
+        });
+
+    });
+    productCard.forEach(card => {
+        card.addEventListener("mouseleave", function (e) {
+            const $elements = this.querySelectorAll(`.card-section__item`);
+            $elements.forEach(element => {
+                element.classList.remove("active")
+            });
+            $elements[0].classList.add("active")
+        });
+    });
+}
+
+
+//========================================================================================================================================================
+
+if (document.querySelector('.card-section__slider')) {
+    const swiperSection = new Swiper('.card-section__slider', {
+        observer: true,
+        observeParents: true,
+        slidesPerView: 1,
+        spaceBetween: 0,
+        speed: 800,
+    });
+}
+
+if (document.querySelector('.block-club__slider')) {
+
+    let isActive = false;
+    let isEnd = false;
+
+    const swiperClub = new Swiper('.block-club__slider', {
+        observer: true,
+        observeParents: true,
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        speed: 800,
+        loop: false,
+        autoplay: {
+            delay: 300,
+            disableOnInteraction: false,
+        }
+    });
+
+    swiperClub.autoplay.stop();
+
+    const clubBlock = document.querySelector('.block-club');
+
+    function checkPosition() {
+        const rect = clubBlock.getBoundingClientRect();
+        const blockMiddle = rect.top + rect.height / 2;
+        const windowMiddle = window.innerHeight / 2;
+
+        if (blockMiddle <= windowMiddle && !isActive && !isEnd) {
+            document.body.style.overflow = 'hidden';
+            swiperClub.autoplay.start();
+            isActive = true;
+        }
+
+        if (rect.bottom < 0 || rect.top > window.innerHeight) {
+            if (isActive) {
+                document.body.style.overflow = '';
+                swiperClub.autoplay.stop();
+                isActive = false;
+            }
+        }
+    }
+
+    window.addEventListener('scroll', checkPosition);
+    window.addEventListener('resize', checkPosition);
+
+    swiperClub.on('reachEnd', function () {
+        isEnd = true;
+        document.body.style.overflow = '';
+        swiperClub.autoplay.stop();
+        isActive = false;
+    });
+
+    swiperClub.on('slideChange', function () {
+        if (!this.isEnd) {
+            isEnd = false;
+        }
+    });
+
+    setTimeout(checkPosition, 100);
+}
+
+if (document.querySelector('.block-reviews__slider')) {
+
+    const swiperReviews = new Swiper('.block-reviews__slider', {
+        observer: true,
+        observeParents: true,
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        speed: 400,
+        breakpoints: {
+            992: {
+                spaceBetween: 14,
+            },
+        },
+    });
+}
+
+//========================================================================================================================================================
+
+const videos = document.querySelectorAll('.block-video video');
+if (videos) {
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+
+                if (entry.isIntersecting) {
+                    video.play().catch(() => { });
+                } else {
+                    video.pause();
+                }
+            });
+        }, {
+            threshold: 0.5
+        });
+
+        videos.forEach(video => {
+            observer.observe(video);
+        });
+    } else {
+        videos.forEach(video => {
+            video.play().catch(() => { });
+        });
+    }
+}
+
+//========================================================================================================================================================
+
+const popupTriggers = document.querySelectorAll('.card-section-popup');
+if (popupTriggers) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const popupElement = entry.target;
+            const popupId = popupElement.dataset.popup;
+
+            if (entry.isIntersecting) {
+                const visibilityRatio = entry.intersectionRatio;
+
+                if (visibilityRatio >= 0.2) {
+                    document.documentElement.classList.add('popup-show');
+
+                    if (popupId) {
+                        const popup = document.querySelector(popupId);
+                        if (popup) {
+                            popup.classList.add('popup_show');
+                        }
+                    }
+                }
+            } else {
+                if (entry.boundingClientRect.bottom < 0 ||
+                    entry.boundingClientRect.top > window.innerHeight ||
+                    entry.intersectionRatio === 0) {
+
+                    document.documentElement.classList.remove('popup-show');
+
+                    if (popupId) {
+                        const popup = document.querySelector(popupId);
+                        if (popup) {
+                            popup.classList.remove('popup_show');
+                        }
+                    }
+                }
+            }
+        });
+    }, {
+        threshold: [0, 0.2, 0.5, 1],
+        rootMargin: '0px'
+    });
+
+    popupTriggers.forEach(trigger => {
+        observer.observe(trigger);
     });
 }
