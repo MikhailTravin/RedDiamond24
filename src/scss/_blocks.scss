@@ -242,7 +242,7 @@
             }
         }
         p {
-            max-width: 435px;
+            max-width: 465px;
             font-size: 20px;
             @media (max-width: 768px) {
                 font-size: 15px;
@@ -281,6 +281,9 @@
 
 .block-section {
     overflow: hidden;
+    @media (max-width: 992px) {
+        overflow: visible;
+    }
     &.block-section2,
     &.block-section-last {
         .block-section__content {
@@ -369,6 +372,15 @@
         @media (max-width: 390px) {
             padding-bottom: 33px;
         }
+        .card-section.card-section-last-bg .card-section__body {
+            padding: 7px 18px 16px 34px;
+            @media (max-width: 768px) {
+                padding: 7px 17px 16px 14px;
+            }
+            @media (max-width: 550px) {
+                padding: 7px 18px 16px 18px;
+            }
+        }
     }
     // .block-section__content
 
@@ -390,7 +402,7 @@
         border-radius: 10px;
         backdrop-filter: blur(10px);
         background: rgba(29, 29, 29, 0.2);
-        margin: 0px 5px -11px 0px;
+        margin: 0px 5px 0px 0px;
         @media (max-width: 768px) {
             width: 100%;
             margin: 0px 0px 0px 0px;
@@ -407,7 +419,7 @@
         width: 100%;
         display: none;
         flex-direction: column;
-        padding: 4px 5px 4px 26px;
+        padding: 4px 5px 70px 26px;
         &.active {
             display: flex;
         }
@@ -560,7 +572,7 @@
             backdrop-filter: blur(80px);
             background: rgba(0, 0, 0, 0.2);
             padding: 7px 15px 8px 20px;
-            margin: 0px 0px 0px -12px;
+            margin: 0px 0px 0px 0px;
             width: calc(100% + 16px);
             @media (max-width: 768px) {
                 padding: 7px 15px 8px 8px;
@@ -585,7 +597,13 @@
         .card-section__body {
             background: #58093b;
             margin: 0px 0px 0px 0px;
-            padding: 7px 15px 16px 24px;
+            padding: 7px 15px 16px 34px;
+            @media (max-width: 768px) {
+                padding: 7px 15px 16px 14px;
+            }
+            @media (max-width: 550px) {
+                padding: 7px 15px 16px 16px;
+            }
         }
     }
     &.card-section-academy {
@@ -631,6 +649,13 @@
         }
         .card-section__body {
             padding: 19px 14px 1px 0px;
+        }
+    }
+    &.card-section-other2 {
+        .card-section__top {
+            p {
+                font-size: 15px;
+            }
         }
     }
 
@@ -946,6 +971,9 @@
     @media (max-width: 992px) {
         padding: 125px 0px 55px 0px;
     }
+    .container {
+        max-width: 1112px;
+    }
     // .block-club__logo
 
     &__logo {
@@ -972,6 +1000,7 @@
         background: rgba(0, 0, 0, 0.2);
         min-height: 207px;
         padding: 14px 22px 80px 22px;
+        margin: 0px 55px 0px 55px;
         @media (max-width: 1100px) {
             margin: 0px 19px;
             padding: 16px 22px 80px 15px;
@@ -1009,13 +1038,17 @@
     // .block-club__slider
 
     &__slider {
-        overflow: visible;
-        margin: -80px 0px 0px -56px;
+        margin: -80px 0px 0px 0px;
+        @media (max-width: 1112px) {
+            margin: -80px -19px 0px -19px;
+            width: calc(100% + 38px);
+            padding: 0px 19px;
+        }
         @media (max-width: 1100px) {
-            margin: -80px 0px 0px 0px;
+            margin: -80px -19px 0px -19px;
         }
         @media (max-width: 768px) {
-            margin: -148px 0px 0px 0px;
+            margin: -148px -19px 0px -19px;
         }
     }
 
