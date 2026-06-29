@@ -10,6 +10,9 @@ body {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
+  @media (max-width: 400px) {
+    background-image: url("../img/bg-mob.webp");
+  }
   &.hide-scrollbar {
     margin: 0px 0px 0px 0px !important;
   }
@@ -105,11 +108,11 @@ a {
   border-radius: 50%;
   background: #f6f6f5;
   svg {
-    transition: transform 0.3s;
+    transition: transform 0.4s, margin-bottom 0.3s;
     fill: none;
     stroke: #483730;
     color: #483730;
-    margin: 0px 0px -2px 0px;
+    margin-bottom: -2px;
   }
 }
 

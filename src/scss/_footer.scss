@@ -2,7 +2,7 @@
     position: relative;
     padding: 0px 0px 271px 0px;
     @media (max-width: 768px) {
-        padding: 0px 0px 62px 0px;
+        padding: 0px 0px 158px 0px;
     }
     .container {
         max-width: 1112px;
@@ -18,7 +18,13 @@
         max-width: 1220px;
         padding: 0px 10px;
         @media (max-width: 768px) {
-            bottom: 14px;
+            bottom: 5%;
+        }
+        @media (max-width: 550px) {
+            bottom: 10%;
+        }
+        @media (max-width: 400px) {
+            bottom: 110px;
         }
         img {
             width: 100%;
@@ -108,6 +114,7 @@
         flex-direction: column;
         gap: 6px;
         @media (max-width: 768px) {
+            width: 100%;
             flex-direction: column-reverse;
             padding: 0px 0px 0px 0px;
         }
