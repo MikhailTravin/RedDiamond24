@@ -1,6 +1,5 @@
 .popup-show .popup {
-    pointer-events: auto;
-    opacity: 1;
+    transform: scale(1);
 }
 .card-section-popup {
     position: relative;
@@ -9,40 +8,67 @@
     position: absolute;
     left: -281px;
     top: 3px;
-    z-index: 40;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease 0s;
+    z-index: 50;
+    transform: scale(0);
+    transition: transform 0.5s;
+    max-width: 240px;
     @media (max-width: 768px) {
+        max-width: calc(100% + 14px);
         display: flex;
         flex-direction: column;
         left: -7px;
-        height: 100%;
+        height: calc(100% + 8px);
         width: calc(100% + 14px);
         top: -4px;
     }
 }
-.popup__content {
-    position: relative;
-    width: 100%;
-    width: 240px;
-    border-radius: 10px;
-    backdrop-filter: blur(80px);
-    background: rgba(29, 29, 29, 0.4);
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    @media (max-width: 768px) {
-        padding: 40px 20px;
-        flex: 1 1 auto;
-        width: 100%;
-        backdrop-filter: blur(10px);
-        background: rgba(29, 29, 29, 0.1);
-    }
-}
-
 .popup {
+    // .popup__content
+
+    &__content {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @media (max-width: 768px) {
+            flex: 1 1 auto;
+            height: 100%;
+            width: 100%;
+            max-width: 240px;
+            margin: 0 auto;
+        }
+    }
+
+    // .popup__wrapper
+
+    &__wrapper {
+        position: relative;
+        z-index: 2;
+        padding: 10px;
+        border-radius: 10px;
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            backdrop-filter: blur(80px);
+            background: rgba(29, 29, 29, 0.4);
+            @media (max-width: 768px) {
+                backdrop-filter: blur(10px);
+                background: rgba(29, 29, 29, 0.1);
+            }
+        }
+        @media (max-width: 768px) {
+            padding: 40px 20px;
+            flex: 1 1 auto;
+            width: 100%;
+        }
+    }
+
     // .popup__close
 
     &__close {
