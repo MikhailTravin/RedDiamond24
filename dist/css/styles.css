@@ -3960,11 +3960,12 @@ a {
 }
 @media (max-width: 768px) {
   .popup__content {
+    padding: 40px 20px;
     -webkit-box-flex: 1;
         -ms-flex: 1 1 auto;
             flex: 1 1 auto;
     width: 100%;
-    backdrop-filter: blur(80px);
+    backdrop-filter: blur(10px);
     background: rgba(29, 29, 29, 0.1);
   }
 }
@@ -3978,6 +3979,7 @@ a {
       -ms-flex: 0 0 47px;
           flex: 0 0 47px;
   height: 32px;
+  display: none;
 }
 .popup__close::before {
   content: "X";
@@ -3986,6 +3988,19 @@ a {
   text-transform: uppercase;
   text-align: center;
   color: #fff;
+}
+@media (max-width: 768px) {
+  .popup__close {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+@media (max-width: 360px) {
+  .popup__close {
+    top: 10px;
+    right: 10px;
+  }
 }
 .popup__body {
   display: -webkit-box;
