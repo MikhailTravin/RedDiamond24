@@ -2069,9 +2069,10 @@ a {
     margin: -2px 5px 0px 0px;
   }
 }
-.card-section__image {
-  position: relative;
-  z-index: 10;
+.card-section__image { /*
+position: relative;
+z-index: 10;
+*/
   pointer-events: none;
   display: -webkit-box;
   display: -ms-flexbox;
