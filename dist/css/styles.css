@@ -1518,6 +1518,7 @@ a {
   }
 }
 .block-section__body {
+  isolation: isolate;
   position: relative;
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
@@ -1534,9 +1535,7 @@ a {
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(29, 29, 29, 0.2);
+  background: rgb(29, 29, 29);
 }
 @media (max-width: 768px) {
   .block-section__body {
