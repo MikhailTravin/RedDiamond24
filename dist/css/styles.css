@@ -670,6 +670,7 @@ body {
   /* Основной отступ снизу */
   padding-bottom: env(safe-area-inset-bottom, 20px);
   /* Для старых версий iOS */
+  background-color: #000;
   padding-bottom: constant(safe-area-inset-bottom, 20px);
   /*
   &::after {
