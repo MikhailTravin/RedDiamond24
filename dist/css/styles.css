@@ -707,11 +707,6 @@ body::before {
   opacity: 1;
   pointer-events: auto;
 }
-@media (max-width: 768px) {
-  .menu-open body::before {
-    display: none;
-  }
-}
 
 body.noscroll {
   overflow: hidden;
@@ -798,10 +793,10 @@ a {
   background: #f6f6f5;
 }
 .arrow svg {
-  -webkit-transition: margin-bottom 0.3s, -webkit-transform 0.4s;
-  transition: margin-bottom 0.3s, -webkit-transform 0.4s;
-  transition: transform 0.4s, margin-bottom 0.3s;
-  transition: transform 0.4s, margin-bottom 0.3s, -webkit-transform 0.4s;
+  -webkit-transition: margin-bottom 0.3s, -webkit-transform 0.3s;
+  transition: margin-bottom 0.3s, -webkit-transform 0.3s;
+  transition: transform 0.3s, margin-bottom 0.3s;
+  transition: transform 0.3s, margin-bottom 0.3s, -webkit-transform 0.3s;
   fill: none;
   stroke: #483730;
   color: #483730;
@@ -1294,7 +1289,6 @@ a {
   }
 }
 .block-text.block-text2 p {
-  max-width: 465px;
   font-size: 20px;
 }
 @media (max-width: 768px) {
@@ -1302,6 +1296,9 @@ a {
     font-size: 15px;
     line-height: 113%;
     max-width: 100%;
+  }
+  .block-text.block-text2 p br {
+    display: none;
   }
 }
 .block-text__content {
@@ -2527,7 +2524,7 @@ a {
     width: 296px;
   }
 }
-@media (max-width: 385px) {
+@media (max-width: 355px) {
   .block-reviews__slide {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 246px;
@@ -2584,9 +2581,9 @@ a {
     padding: 11px 22px 0px 10px;
   }
 }
-@media (max-width: 385px) {
+@media (max-width: 355px) {
   .block-reviews__item {
-    padding: 16px 22px 0px 10px;
+    padding: 16px 10px 0px 5px;
   }
 }
 .block-reviews__item p {
@@ -2641,6 +2638,7 @@ a {
 @media (max-width: 768px) {
   .block-reviews__title {
     font-size: 13px;
+    max-width: 227px;
   }
 }
 
@@ -3503,7 +3501,7 @@ a {
             flex: 1 1 auto;
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    padding: 27px 0px 30px 0px;
+    padding: 27px 0px 130px 0px;
   }
 }
 .burger-menu__content {
