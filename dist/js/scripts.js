@@ -1802,6 +1802,13 @@ let gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) => {
         }
     }
 
+    if (document.documentElement.classList.contains("menu-open")) {
+        if (typeof menuClose === 'function') {
+            menuClose();
+        }
+        document.documentElement.classList.remove('menu-open');
+    }
+
     if (typeof SmoothScroll !== 'undefined') {
         let options = {
             speedAsDuration: true,
@@ -1843,6 +1850,13 @@ function pageNavigation() {
                 const noHeader = gotoLink.hasAttribute('data-goto-header');
                 const gotoSpeed = gotoLink.dataset.gotoSpeed ? parseInt(gotoLink.dataset.gotoSpeed) : 500;
                 const offsetTop = gotoLink.dataset.gotoTop ? parseInt(gotoLink.dataset.gotoTop) : 0;
+
+                if (document.documentElement.classList.contains("menu-open")) {
+                    if (typeof menuClose === 'function') {
+                        menuClose();
+                    }
+                    document.documentElement.classList.remove('menu-open');
+                }
 
                 if (window.modules_flsModules && modules_flsModules.fullpage) {
                     const fullpageSection = document.querySelector(`${gotoLinkSelector}`)?.closest('[data-fp-section]');
