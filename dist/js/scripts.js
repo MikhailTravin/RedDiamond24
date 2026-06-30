@@ -1802,12 +1802,6 @@ let gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) => {
         }
     }
 
-    if (document.documentElement.classList.contains("menu-open")) {
-        if (typeof menuClose === 'function') {
-            menuClose();
-        }
-    }
-
     if (typeof SmoothScroll !== 'undefined') {
         let options = {
             speedAsDuration: true,
@@ -1856,9 +1850,6 @@ function pageNavigation() {
 
                     if (fullpageSectionId !== null) {
                         modules_flsModules.fullpage.switchingSection(fullpageSectionId);
-                        if (document.documentElement.classList.contains("menu-open") && typeof menuClose === 'function') {
-                            menuClose();
-                        }
                     }
                 } else {
                     const targetBlock = document.querySelector(gotoLinkSelector);
