@@ -1314,7 +1314,6 @@ a {
   }
 }
 .block-text__content {
-  background: rgba(0, 0, 0, 0.1);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
