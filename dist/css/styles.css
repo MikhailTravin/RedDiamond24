@@ -767,6 +767,7 @@ a {
           flex: 0 0 auto;
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
   min-height: 32px;
   font-weight: 700;
@@ -975,6 +976,7 @@ a {
   border-radius: 40px;
   background: rgba(42, 42, 42, 0.1);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 .pagination .swiper-pagination-bullet {
   position: relative;
@@ -1038,6 +1040,7 @@ a {
   background: rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 14px 27px 30px 10px;
   position: relative;
   display: -webkit-box;
@@ -1168,6 +1171,7 @@ a {
   border-radius: 10px;
   padding: 28px 42px 50px 42px;
   backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
   background: rgba(0, 0, 0, 0.2);
 }
 @media (max-width: 768px) {
@@ -1531,6 +1535,7 @@ a {
   height: 100%;
   border-radius: 10px;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   background: rgba(29, 29, 29, 0.2);
 }
 @media (max-width: 768px) {
@@ -1624,6 +1629,7 @@ a {
   width: 100%;
   height: calc(100% - 108px);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   background: rgba(0, 0, 0, 0.5);
 }
 @media (max-width: 768px) {
@@ -1741,6 +1747,7 @@ a {
 .card-section.card-section-last .card-section__body {
   border-radius: 10px;
   backdrop-filter: blur(80px);
+  -webkit-backdrop-filter: blur(80px);
   background: rgba(0, 0, 0, 0.2);
   padding: 7px 15px 8px 20px;
   margin: 0px 0px 0px 0px;
@@ -1854,6 +1861,7 @@ a {
   width: calc(100% + 56px);
   height: 100%;
   backdrop-filter: blur(80px);
+  -webkit-backdrop-filter: blur(80px);
   background: linear-gradient(160deg, #3a0627 0%, #a0116c 100%);
   border-radius: 10px;
 }
@@ -2261,6 +2269,7 @@ a {
 .block-club__top {
   border-radius: 10px;
   backdrop-filter: blur(80px);
+  -webkit-backdrop-filter: blur(80px);
   position: relative;
   background: rgba(0, 0, 0, 0.2);
   min-height: 207px;
@@ -2334,6 +2343,7 @@ a {
   width: 370px;
   margin: 22px 0px 0px 0px;
   backdrop-filter: blur(80px);
+  -webkit-backdrop-filter: blur(80px);
   background: rgba(29, 29, 29, 0.4);
   border-radius: 10px;
   position: relative;
@@ -2497,6 +2507,7 @@ a {
 .block-reviews__body {
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 14px 16px 21px 16px;
   min-width: 0;
@@ -2829,6 +2840,7 @@ a {
   background: radial-gradient(30.69% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.21) 100%);
   border-radius: 20px;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 @media (max-width: 992px) {
   .block-founder__right {
@@ -2839,6 +2851,7 @@ a {
     margin: 0px 0px 0px 0px;
     gap: 15px;
     backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     background: radial-gradient(0% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.1) 100%);
   }
 }
@@ -3027,6 +3040,7 @@ a {
   height: 100%;
   background: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
 }
 @media (max-width: 768px) {
@@ -3061,6 +3075,7 @@ a {
             flex: 0 0 47px;
     height: 32px;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 }
 @media (max-width: 768px) {
@@ -3130,6 +3145,7 @@ a {
   padding: 10px 27px;
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
   min-width: 100px;
 }
@@ -3293,6 +3309,7 @@ a {
   height: 100%;
   background: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
 }
 @media (max-width: 768px) {
@@ -3342,6 +3359,7 @@ a {
   background: rgba(0, 0, 0, 0.1);
   margin: 5px 0px 0px 0px;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 21px 10px 34px 10px;
   opacity: 0;
   pointer-events: none;
@@ -3351,6 +3369,7 @@ a {
 @media (max-width: 768px) {
   .header-lang__dropdown {
     backdrop-filter: blur(150px);
+    -webkit-backdrop-filter: blur(150px);
     background: rgba(211, 167, 142, 0.4);
   }
 }
@@ -3413,6 +3432,7 @@ a {
             flex: 0 0 47px;
     height: 32px;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
   .menu-burger::before {
     content: "X";
@@ -3842,6 +3862,7 @@ a {
   background: rgba(241, 241, 241, 0.1);
   border-radius: 10px;
   backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
   padding: 14px 25px 13px 13px;
   position: relative;
   display: -webkit-box;
@@ -4018,11 +4039,13 @@ a {
   height: 100%;
   border-radius: 10px;
   backdrop-filter: blur(80px);
+  -webkit-backdrop-filter: blur(80px);
   background: rgba(29, 29, 29, 0.4);
 }
 @media (max-width: 768px) {
   .popup__wrapper::before {
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     background: rgba(29, 29, 29, 0.1);
   }
 }
@@ -4410,6 +4433,7 @@ a {
 .footer-top {
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 49px 32px 30px 27px;
   position: relative;
@@ -4723,6 +4747,7 @@ a {
 .footer-bottom {
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 15px 28px 24px 26px;
   display: -webkit-box;
