@@ -128,7 +128,6 @@ a {
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
-  z-index: -1;
 }
 @media (max-width: 992px) {
   .main-wrapper-outer {
@@ -1315,6 +1314,8 @@ a {
   }
 }
 .block-text__content {
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.1);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
