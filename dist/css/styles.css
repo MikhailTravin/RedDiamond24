@@ -3317,6 +3317,7 @@ a {
 }
 @media (max-width: 768px) {
   .header-lang__button {
+    height: 32px;
     padding: 8.8px 10px;
   }
 }
