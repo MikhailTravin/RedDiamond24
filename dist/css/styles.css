@@ -671,24 +671,24 @@ body {
   padding-bottom: env(safe-area-inset-bottom, 20px);
   /* Для старых версий iOS */
   padding-bottom: constant(safe-area-inset-bottom, 20px);
-}
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -2;
-  background-image: url("../img/image1.webp");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-}
-@media (max-width: 480px) {
-  body::after {
-    background-image: url("../img/bg-mob.webp");
+  /*
+  &::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+    background-image: url("../img/image1.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    @media (max-width: 480px) {
+      background-image: url("../img/bg-mob.webp");
+    }
   }
+  */
 }
 body.hide-scrollbar {
   margin: 0px 0px 0px 0px !important;
@@ -1535,7 +1535,9 @@ a {
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  background: rgb(29, 29, 29);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(29, 29, 29, 0.2);
 }
 @media (max-width: 768px) {
   .block-section__body {
