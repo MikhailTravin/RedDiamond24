@@ -660,10 +660,6 @@ a {
   color: var(--black-50);
 }
 
-html {
-  background-color: #000;
-}
-
 body {
   color: var(--black);
   font-family: var(--font-family);
@@ -671,49 +667,45 @@ body {
   font-size: 16px;
   line-height: 120%;
   padding: 0px 0px 0px 0px !important;
-  /* Основной отступ снизу */
-  padding-bottom: env(safe-area-inset-bottom, 20px);
-  /* Для старых версий iOS */
-  padding-bottom: constant(safe-area-inset-bottom, 20px);
   /*
-  &::after {
+  &::before {
     content: "";
     position: fixed;
-    top: 0;
+    top: 264px;
     left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -2;
-    background-image: url("../img/image1.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    @media (max-width: 480px) {
-      background-image: url("../img/bg-mob.webp");
-    }
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(10, 17, 25, 0.4) 0%, rgba(7, 7, 7, 0.4) 30%, rgba(7, 7, 7, 0.95) 100%);
   }
   */
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+  background-image: url("../img/image1.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+@media (max-width: 480px) {
+  body::before {
+    background-image: url("../img/bg-mob.webp");
+  }
 }
 body.hide-scrollbar {
   margin: 0px 0px 0px 0px !important;
 }
 .lock body {
   overflow: hidden;
-}
-body::before {
-  content: "";
-  position: fixed;
-  top: 264px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 99;
-  opacity: 0;
-  -webkit-transition: opacity 0.4s;
-  transition: opacity 0.4s;
-  pointer-events: none;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(10, 17, 25, 0.4)), color-stop(30%, rgba(7, 7, 7, 0.4)), to(rgba(7, 7, 7, 0.95)));
-  background: linear-gradient(180deg, rgba(10, 17, 25, 0.4) 0%, rgba(7, 7, 7, 0.4) 30%, rgba(7, 7, 7, 0.95) 100%);
 }
 .menu-open body {
   overflow: hidden;
