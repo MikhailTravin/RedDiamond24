@@ -667,21 +667,6 @@ body {
   font-size: 16px;
   line-height: 120%;
   padding: 0px 0px 0px 0px !important;
-  /*
-  &::before {
-    content: "";
-    position: fixed;
-    top: 264px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 99;
-    opacity: 0;
-    transition: opacity 0.4s;
-    pointer-events: none;
-    background: linear-gradient(180deg, rgba(10, 17, 25, 0.4) 0%, rgba(7, 7, 7, 0.4) 30%, rgba(7, 7, 7, 0.95) 100%);
-  }
-  */
 }
 body::before {
   content: "";
@@ -707,10 +692,25 @@ body.hide-scrollbar {
 .lock body {
   overflow: hidden;
 }
+body::after {
+  content: "";
+  position: fixed;
+  top: 264px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  opacity: 0;
+  -webkit-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+  pointer-events: none;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(10, 17, 25, 0.4)), color-stop(30%, rgba(7, 7, 7, 0.4)), to(rgba(7, 7, 7, 0.95)));
+  background: linear-gradient(180deg, rgba(10, 17, 25, 0.4) 0%, rgba(7, 7, 7, 0.4) 30%, rgba(7, 7, 7, 0.95) 100%);
+}
 .menu-open body {
   overflow: hidden;
 }
-.menu-open body::before {
+.menu-open body::after {
   content: "";
   opacity: 1;
   pointer-events: auto;
@@ -1531,9 +1531,7 @@ a {
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(29, 29, 29, 0.2);
+  background: #000;
 }
 @media (max-width: 768px) {
   .block-section__body {
