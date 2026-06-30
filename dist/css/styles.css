@@ -660,6 +660,10 @@ a {
   color: var(--black-50);
 }
 
+html {
+  background-color: #000;
+}
+
 body {
   color: var(--black);
   font-family: var(--font-family);
@@ -670,7 +674,6 @@ body {
   /* Основной отступ снизу */
   padding-bottom: env(safe-area-inset-bottom, 20px);
   /* Для старых версий iOS */
-  background-color: #000;
   padding-bottom: constant(safe-area-inset-bottom, 20px);
   /*
   &::after {
