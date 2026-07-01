@@ -48,6 +48,7 @@
 .footer-top {
     background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
     padding: 49px 32px 30px 27px;
     position: relative;
@@ -293,6 +294,7 @@
 .footer-bottom {
     background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
     padding: 15px 28px 24px 26px;
     display: flex;

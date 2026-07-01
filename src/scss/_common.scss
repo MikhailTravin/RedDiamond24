@@ -5,21 +5,30 @@ body {
   font-size: 16px;
   line-height: 120%;
   padding: 0px 0px 0px 0px !important;
-  background-image: url("../img/image1.webp");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-  @media (max-width: 400px) {
-    background-image: url("../img/bg-mob.webp");
+  &::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-image: url("../img/image1.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    @media (max-width: 480px) {
+      background-image: url("../img/bg-mob.webp");
+    }
   }
+
   &.hide-scrollbar {
     margin: 0px 0px 0px 0px !important;
   }
   .lock & {
     overflow: hidden;
   }
-  &::before {
+  &::after {
     content: "";
     position: fixed;
     top: 264px;
@@ -34,7 +43,7 @@ body {
   }
   .menu-open & {
     overflow: hidden;
-    &::before {
+    &::after {
       content: "";
       opacity: 1;
       pointer-events: auto;
@@ -82,6 +91,7 @@ a {
   flex: 0 0 auto;
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
   min-height: 32px;
   font-weight: 700;
@@ -108,7 +118,9 @@ a {
   border-radius: 50%;
   background: #f6f6f5;
   svg {
-    transition: transform 0.4s, margin-bottom 0.3s;
+    transition:
+      transform 0.3s,
+      margin-bottom 0.3s;
     fill: none;
     stroke: #483730;
     color: #483730;

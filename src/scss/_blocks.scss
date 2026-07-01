@@ -1,6 +1,6 @@
 .block-tecnical {
     overflow: hidden;
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,6 +15,7 @@
         background: rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         padding: 14px 27px 30px 10px;
         position: relative;
         display: flex;
@@ -99,7 +100,7 @@
     align-items: start;
     padding: 298px 0px 100px 0px;
     min-height: 300px;
-    min-height: 100vh;
+    min-height: 100dvh;
     @media (max-width: 992px) {
         padding: 134px 0px 50px 0px;
     }
@@ -122,6 +123,7 @@
         border-radius: 10px;
         padding: 28px 42px 50px 42px;
         backdrop-filter: blur(50px);
+        -webkit-backdrop-filter: blur(50px);
         background: rgba(0, 0, 0, 0.2);
         @media (max-width: 768px) {
             padding: 30px 30px 50px 10px;
@@ -242,12 +244,14 @@
             }
         }
         p {
-            max-width: 465px;
             font-size: 20px;
             @media (max-width: 768px) {
                 font-size: 15px;
                 line-height: 113%;
                 max-width: 100%;
+                br {
+                    display: none;
+                }
             }
         }
     }
@@ -333,6 +337,15 @@
         .card-section {
             cursor: default;
         }
+        .block-section__cards {
+            padding: 4px 5px 4px 26px;
+            @media (max-width: 768px) {
+                padding: 4px 5px;
+            }
+            @media (max-width: 550px) {
+                padding: 6px 0px 6px 0px;
+            }
+        }
     }
     &.block-section2 {
         padding-top: 400px;
@@ -398,20 +411,24 @@
     // .block-section__body
 
     &__body {
+        isolation: isolate;
         position: relative;
         flex: 1 1 auto;
         height: 327px;
         border-radius: 10px;
         margin: 0px 5px 0px 0px;
-        &::before {
+        &::after {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: -1;
+            isolation: isolate;
             border-radius: 10px;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             background: rgba(29, 29, 29, 0.2);
         }
         @media (max-width: 768px) {
@@ -485,6 +502,7 @@
         width: 100%;
         height: calc(100% - 108px);
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         background: rgba(0, 0, 0, 0.5);
         @media (max-width: 768px) {
             top: 0;
@@ -581,6 +599,7 @@
         .card-section__body {
             border-radius: 10px;
             backdrop-filter: blur(80px);
+            -webkit-backdrop-filter: blur(80px);
             background: rgba(0, 0, 0, 0.2);
             padding: 7px 15px 8px 20px;
             margin: 0px 0px 0px 0px;
@@ -680,6 +699,7 @@
         width: calc(100% + 56px);
         height: 100%;
         backdrop-filter: blur(80px);
+        -webkit-backdrop-filter: blur(80px);
         background: linear-gradient(160deg, #3a0627 0%, #a0116c 100%);
         border-radius: 10px;
         @media (max-width: 768px) {
@@ -1023,6 +1043,7 @@
     &__top {
         border-radius: 10px;
         backdrop-filter: blur(80px);
+        -webkit-backdrop-filter: blur(80px);
         position: relative;
         background: rgba(0, 0, 0, 0.2);
         min-height: 207px;
@@ -1092,6 +1113,7 @@
         width: 370px;
         margin: 22px 0px 0px 0px;
         backdrop-filter: blur(80px);
+        -webkit-backdrop-filter: blur(80px);
         background: rgba(29, 29, 29, 0.4);
         border-radius: 10px;
         position: relative;
@@ -1237,6 +1259,7 @@
     &__body {
         background: rgba(0, 0, 0, 0.2);
         backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border-radius: 20px;
         padding: 14px 16px 21px 16px;
         min-width: 0;
@@ -1271,7 +1294,7 @@
             flex: 0 0 296px;
             width: 296px;
         }
-        @media (max-width: 385px) {
+        @media (max-width: 355px) {
             flex: 0 0 246px;
             width: 246px;
         }
@@ -1313,8 +1336,8 @@
             gap: 14px;
             padding: 11px 22px 0px 10px;
         }
-        @media (max-width: 385px) {
-            padding: 16px 22px 0px 10px;
+        @media (max-width: 355px) {
+            padding: 16px 10px 0px 5px;
         }
         p {
             display: flex;
@@ -1326,6 +1349,7 @@
             color: #fff;
             span {
                 font-size: 13px;
+                line-height: 110%;
                 @media (max-width: 768px) {
                     font-size: 12px;
                 }
@@ -1361,6 +1385,7 @@
         color: #fff;
         @media (max-width: 768px) {
             font-size: 13px;
+            max-width: 227px;
         }
     }
 }
@@ -1498,12 +1523,14 @@
         background: radial-gradient(30.69% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.21) 100%);
         border-radius: 20px;
         backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         @media (max-width: 992px) {
             padding: 14px 20px 19px 19px;
             flex: 0 1 auto;
             margin: 0px 0px 0px 0px;
             gap: 15px;
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             background: radial-gradient(0% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.1) 100%);
         }
         p {

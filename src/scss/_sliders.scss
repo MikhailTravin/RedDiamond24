@@ -95,6 +95,7 @@
         border-radius: 40px;
         background: rgba(42, 42, 42, 0.1);
         backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
     }
     .swiper-pagination-bullet {
         position: relative;
