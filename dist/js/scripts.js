@@ -897,776 +897,7 @@ if (document.querySelector('.card-section__slider')) {
         speed: 800,
     });
 }
-/*
-const blockClub = document.getElementById('block-club');
-if (blockClub) {
-    const swiperElement = blockClub.querySelector('.swiper');
 
-    let isScrollLocked = false;
-    let isTransitioning = false;
-    let wheelTimeout = null;
-    let lastWheelTime = 0;
-    let lastScrollY = 0;
-
-    let scrollAccumulator = 0;
-    let isAnimating = false;
-    let animationFrame = null;
-
-    let swiperInstance = null;
-
-    function isMobileDevice() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-            || window.innerWidth <= 768;
-    }
-
-    const SPEED_CONFIG = {
-        minSpeed: 400,
-        maxSpeed: 1000,
-        defaultSpeed: 700,
-        wheelCooldown: 100,
-        transitionBuffer: 50,
-        scrollThreshold: 30,
-        mobile: {
-            scrollThreshold: 20,
-            minSpeed: 300,
-            maxSpeed: 800,
-            longSwipeThreshold: 150
-        }
-    };
-
-    function getSlideWidth() {
-        const slides = swiperElement.querySelectorAll('.swiper-slide');
-        if (slides.length > 0) {
-            const slide = slides[0];
-            const slideStyles = window.getComputedStyle(slide);
-            const marginRight = parseFloat(slideStyles.marginRight) || 0;
-            const width = slide.offsetWidth + marginRight;
-            return width;
-        }
-        return 370;
-    }
-
-    function getMaxTranslate() {
-        if (!swiperInstance) return 0;
-
-        const slides = swiperInstance.slides;
-        const slideWidth = getSlideWidth();
-        const totalSlides = slides.length;
-        const containerWidth = swiperElement.offsetWidth;
-
-        const isMobile = isMobileDevice();
-        const paddingOffset = isMobile ? 19 : 0;
-
-        const totalWidth = totalSlides * slideWidth;
-        const maxTranslate = Math.max(0, totalWidth - containerWidth + paddingOffset);
-
-        return maxTranslate;
-    }
-
-    function isEndReached() {
-        if (!swiperInstance) return true;
-
-        const isMobile = isMobileDevice();
-        if (!isMobile) {
-            return swiperInstance.isEnd;
-        }
-
-        const wrapper = swiperElement.querySelector('.swiper-wrapper');
-        if (!wrapper) return true;
-
-        const transform = wrapper.style.transform;
-        const match = transform.match(/translate3d\((-?\d+\.?\d*)px/);
-        if (!match) return false;
-
-        const currentTranslate = Math.abs(parseFloat(match[1]));
-        const maxTranslate = getMaxTranslate();
-
-        return currentTranslate >= maxTranslate - 1;
-    }
-
-    function isStartReached() {
-        if (!swiperInstance) return true;
-
-        const isMobile = isMobileDevice();
-        if (!isMobile) {
-            return swiperInstance.isBeginning;
-        }
-
-        const wrapper = swiperElement.querySelector('.swiper-wrapper');
-        if (!wrapper) return true;
-
-        const transform = wrapper.style.transform;
-        const match = transform.match(/translate3d\((-?\d+\.?\d*)px/);
-        if (!match) return true;
-
-        const currentTranslate = parseFloat(match[1]);
-        return currentTranslate >= -1;
-    }
-
-    function updateSwiperPosition() {
-        if (!swiperInstance || !isMobileDevice()) return;
-
-        const wrapper = swiperElement.querySelector('.swiper-wrapper');
-        if (!wrapper) return;
-
-        const activeIndex = swiperInstance.activeIndex;
-        const slideWidth = getSlideWidth();
-        const maxTranslate = getMaxTranslate();
-        const targetTranslate = Math.min(activeIndex * slideWidth, maxTranslate);
-
-        if (Math.abs(swiperInstance.translate + targetTranslate) > 1) {
-            swiperInstance.setTranslate(-targetTranslate);
-            swiperInstance.update();
-        }
-    }
-
-    if (swiperElement && !swiperElement.swiper) {
-        const isMobile = isMobileDevice();
-
-        swiperInstance = new Swiper(swiperElement, {
-            slidesPerView: 'auto',
-            spaceBetween: 20,
-            mousewheel: false,
-            speed: SPEED_CONFIG.defaultSpeed,
-            effect: 'slide',
-            slidesPerGroup: 1,
-            centeredSlides: false,
-            watchOverflow: true,
-            resistance: true,
-            resistanceRatio: 0,
-            touchRatio: isMobile ? 1.2 : 1,
-            touchAngle: 45,
-            simulateTouch: true,
-            shortSwipes: true,
-            longSwipes: false,
-            autoplay: false,
-            easing: 'easeOutCubic',
-            watchSlidesProgress: true,
-            watchSlidesVisibility: true,
-            grabCursor: false,
-            preventInteractionOnTransition: true,
-            slidesOffsetAfter: isMobile ? 19 : 0,
-            autoHeight: false,
-            on: {
-                slideChange: function () {
-                    updateSlideStates();
-                },
-                slideChangeTransitionEnd: function () {
-                    isTransitioning = false;
-                    isAnimating = false;
-                    if (isMobile) {
-                        updateSwiperPosition();
-                        checkMobileEdges();
-                    }
-                },
-                update: function () {
-                    this.updateSlides();
-                },
-                reachEnd: function () {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('end');
-                },
-                reachBeginning: function () {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('start');
-                },
-                init: function () {
-                    this.update();
-                    setTimeout(() => {
-                        this.slideTo(0, 0);
-                        if (isMobile) {
-                            setTimeout(() => {
-                                const maxTranslate = getMaxTranslate();
-                                this.params.slidesOffsetAfter = 19;
-                                this.update();
-                                updateSwiperPosition();
-                            }, 100);
-                        }
-                    }, 50);
-                },
-                setTranslate: function (translate) {
-                    if (isMobile) {
-                        const maxTranslate = getMaxTranslate();
-                        if (Math.abs(translate) > maxTranslate) {
-                            translate = -maxTranslate;
-                        }
-                    }
-                    this.wrapperEl.style.transform = `translate3d(${translate}px, 0px, 0px)`;
-                }
-            }
-        });
-
-        setTimeout(() => {
-            if (swiperInstance) {
-                swiperInstance.update();
-                if (isMobileDevice()) {
-                    const maxTranslate = getMaxTranslate();
-                    swiperInstance.params.slidesOffsetAfter = 19;
-                    swiperInstance.update();
-                    updateSwiperPosition();
-                }
-            }
-        }, 200);
-
-    } else if (swiperElement && swiperElement.swiper) {
-        swiperInstance = swiperElement.swiper;
-        const isMobile = isMobileDevice();
-        Object.assign(swiperInstance.params, {
-            slidesPerView: 'auto',
-            slidesPerGroup: 1,
-            slidesPerGroupAuto: false,
-            speed: SPEED_CONFIG.defaultSpeed,
-            longSwipes: false,
-            resistanceRatio: 0,
-            easing: 'easeOutCubic',
-            watchSlidesProgress: true,
-            watchSlidesVisibility: true,
-            watchOverflow: true,
-            touchRatio: isMobile ? 1.2 : 1,
-            spaceBetween: 20,
-            slidesOffsetAfter: isMobile ? 19 : 0
-        });
-        swiperInstance.update();
-        if (isMobile) {
-            setTimeout(updateSwiperPosition, 100);
-        }
-    }
-
-    function checkMobileEdges() {
-        if (!isMobileDevice() || !swiperInstance) return;
-
-        const isEnd = isEndReached();
-        const isStart = isStartReached();
-
-        if (isEnd) {
-            unlockScrollSmooth();
-            showEdgeFeedback('end');
-        } else if (isStart) {
-            unlockScrollSmooth();
-            showEdgeFeedback('start');
-        }
-    }
-
-    if (swiperInstance) {
-        const originalSlideNext = swiperInstance.slideNext;
-        const originalSlidePrev = swiperInstance.slidePrev;
-
-        swiperInstance.slideNext = function (speed) {
-            const isMobile = isMobileDevice();
-
-            if (isMobile) {
-                if (isEndReached()) {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('end');
-                    return false;
-                }
-
-                const nextIndex = this.activeIndex + 1;
-                const maxIndex = this.slides.length - 1;
-
-                if (nextIndex > maxIndex) {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('end');
-                    return false;
-                }
-
-                const result = originalSlideNext.call(this, speed);
-                setTimeout(() => {
-                    updateSwiperPosition();
-                }, speed || this.params.speed);
-                return result;
-            } else {
-                if (this.isEnd || this.activeIndex + 1 >= this.slides.length) {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('end');
-                    return false;
-                }
-                return originalSlideNext.call(this, speed);
-            }
-        };
-
-        swiperInstance.slidePrev = function (speed) {
-            const isMobile = isMobileDevice();
-
-            if (isMobile) {
-                if (isStartReached()) {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('start');
-                    return false;
-                }
-
-                const result = originalSlidePrev.call(this, speed);
-                setTimeout(() => {
-                    updateSwiperPosition();
-                }, speed || this.params.speed);
-                return result;
-            } else {
-                if (this.isBeginning || this.activeIndex - 1 < 0) {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('start');
-                    return false;
-                }
-                return originalSlidePrev.call(this, speed);
-            }
-        };
-    }
-
-    function calculateSpeedFromAccumulator(accumulator) {
-        const isMobile = isMobileDevice();
-        const minSpeed = isMobile ? SPEED_CONFIG.mobile.minSpeed : SPEED_CONFIG.minSpeed;
-        const maxSpeed = isMobile ? SPEED_CONFIG.mobile.maxSpeed : SPEED_CONFIG.maxSpeed;
-
-        const speedFactor = Math.min(accumulator / 100, 3);
-        let speed = SPEED_CONFIG.defaultSpeed / (1 + speedFactor * 0.3);
-        speed = Math.max(minSpeed, Math.min(speed, maxSpeed));
-
-        if (accumulator > 200) {
-            speed = speed * 0.9;
-        }
-
-        return Math.round(speed);
-    }
-
-    function handleWheelWithMomentum(e) {
-        if (!isScrollLocked || !swiperInstance) return;
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        const delta = e.deltaY;
-        const currentTime = Date.now();
-
-        scrollAccumulator += delta;
-
-        if (isAnimating) {
-            return;
-        }
-
-        const absAccumulator = Math.abs(scrollAccumulator);
-        const threshold = isMobileDevice() ? SPEED_CONFIG.mobile.scrollThreshold : SPEED_CONFIG.scrollThreshold;
-
-        if (absAccumulator < threshold) {
-            return;
-        }
-
-        let remainingAccumulator = scrollAccumulator;
-        let speed = calculateSpeedFromAccumulator(absAccumulator);
-        scrollAccumulator = 0;
-
-        const direction = remainingAccumulator > 0 ? 1 : -1;
-
-        if (direction > 0 && isEndReached()) {
-            unlockScrollSmooth();
-            showEdgeFeedback('end');
-            return;
-        }
-        if (direction < 0 && isStartReached()) {
-            unlockScrollSmooth();
-            showEdgeFeedback('start');
-            return;
-        }
-
-        isAnimating = true;
-        isTransitioning = true;
-
-        if (direction > 0) {
-            swiperInstance.slideNext(speed);
-        } else {
-            swiperInstance.slidePrev(speed);
-        }
-
-        clearTimeout(wheelTimeout);
-        wheelTimeout = setTimeout(() => {
-            isTransitioning = false;
-            isAnimating = false;
-        }, speed + SPEED_CONFIG.transitionBuffer);
-
-        lastWheelTime = currentTime;
-    }
-
-    let touchAccumulator = 0;
-    let touchStartY = 0;
-    let touchStartX = 0;
-    let isSwipingHorizontally = false;
-    let momentumTimer = null;
-    let lastTouchEndTime = 0;
-
-    document.addEventListener('touchstart', function (e) {
-        if (!isScrollLocked) return;
-
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        touchAccumulator = 0;
-        isSwipingHorizontally = false;
-
-        clearTimeout(momentumTimer);
-    }, { passive: true });
-
-    document.addEventListener('touchmove', function (e) {
-        if (!isScrollLocked || !swiperInstance || isTransitioning) return;
-
-        const deltaX = touchStartX - e.touches[0].clientX;
-        const deltaY = touchStartY - e.touches[0].clientY;
-
-        if (!isSwipingHorizontally && Math.abs(deltaX) > 10) {
-            isSwipingHorizontally = true;
-            e.preventDefault();
-        }
-
-        const touchDelta = isSwipingHorizontally ? deltaX : deltaY;
-        touchAccumulator += touchDelta;
-
-        const threshold = isMobileDevice() ? SPEED_CONFIG.mobile.scrollThreshold : SPEED_CONFIG.scrollThreshold;
-
-        if (Math.abs(touchAccumulator) > threshold) {
-            const direction = touchAccumulator > 0 ? 1 : -1;
-            const isLongSwipe = Math.abs(touchAccumulator) > (isMobileDevice() ? SPEED_CONFIG.mobile.longSwipeThreshold : 200);
-            let speed = calculateSpeedFromAccumulator(Math.abs(touchAccumulator));
-
-            if (isLongSwipe) {
-                speed = Math.max(SPEED_CONFIG.mobile.minSpeed, speed * 0.7);
-            }
-
-            if (direction > 0 && isEndReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('end');
-                touchAccumulator = 0;
-                return;
-            }
-            if (direction < 0 && isStartReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('start');
-                touchAccumulator = 0;
-                return;
-            }
-
-            if (direction > 0) {
-                swiperInstance.slideNext(speed);
-                isTransitioning = true;
-                setTimeout(() => {
-                    isTransitioning = false;
-                    if (isMobileDevice()) {
-                        updateSwiperPosition();
-                    }
-                }, speed + SPEED_CONFIG.transitionBuffer);
-            } else {
-                swiperInstance.slidePrev(speed);
-                isTransitioning = true;
-                setTimeout(() => {
-                    isTransitioning = false;
-                    if (isMobileDevice()) {
-                        updateSwiperPosition();
-                    }
-                }, speed + SPEED_CONFIG.transitionBuffer);
-            }
-
-            touchAccumulator = 0;
-            touchStartY = e.touches[0].clientY;
-            touchStartX = e.touches[0].clientX;
-        }
-    }, { passive: false });
-
-    document.addEventListener('touchend', function (e) {
-        if (!isScrollLocked || !swiperInstance || isTransitioning) return;
-
-        clearTimeout(momentumTimer);
-        lastTouchEndTime = Date.now();
-
-        if (Math.abs(touchAccumulator) > 30) {
-            const direction = touchAccumulator > 0 ? 1 : -1;
-            const speed = calculateSpeedFromAccumulator(Math.abs(touchAccumulator) * 1.5);
-
-            if (direction > 0 && isEndReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('end');
-                touchAccumulator = 0;
-                return;
-            }
-            if (direction < 0 && isStartReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('start');
-                touchAccumulator = 0;
-                return;
-            }
-
-            momentumTimer = setTimeout(() => {
-                if (direction > 0) {
-                    swiperInstance.slideNext(speed);
-                    isTransitioning = true;
-                    setTimeout(() => {
-                        isTransitioning = false;
-                        if (isMobileDevice()) {
-                            updateSwiperPosition();
-                        }
-                    }, speed + SPEED_CONFIG.transitionBuffer);
-                } else {
-                    swiperInstance.slidePrev(speed);
-                    isTransitioning = true;
-                    setTimeout(() => {
-                        isTransitioning = false;
-                        if (isMobileDevice()) {
-                            updateSwiperPosition();
-                        }
-                    }, speed + SPEED_CONFIG.transitionBuffer);
-                }
-            }, 50);
-        }
-    }, { passive: true });
-
-    function updateSlideStates() {
-        if (!swiperInstance) return;
-        const slides = swiperInstance.slides;
-        slides.forEach((slide, index) => {
-            slide.classList.remove('swiper-slide-prev', 'swiper-slide-next');
-            if (index === swiperInstance.activeIndex) {
-                slide.classList.add('swiper-slide-active');
-            } else if (index === swiperInstance.activeIndex - 1) {
-                slide.classList.add('swiper-slide-prev');
-            } else if (index === swiperInstance.activeIndex + 1) {
-                slide.classList.add('swiper-slide-next');
-            }
-        });
-    }
-
-    function unlockScrollSmooth() {
-        if (!isScrollLocked) return;
-
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        document.body.classList.remove('scroll-locked');
-
-        isScrollLocked = false;
-        document.removeEventListener('wheel', handleWheelWithMomentum);
-        clearTimeout(wheelTimeout);
-        clearTimeout(momentumTimer);
-
-        scrollAccumulator = 0;
-        touchAccumulator = 0;
-        isAnimating = false;
-
-        if (animationFrame) {
-            cancelAnimationFrame(animationFrame);
-            animationFrame = null;
-        }
-
-        window.scrollTo(0, scrollY);
-    }
-
-    function lockScroll() {
-        if (isScrollLocked) return;
-
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-        isScrollLocked = true;
-        document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = getScrollbarWidth() + 'px';
-        document.body.style.position = 'relative';
-        document.body.style.height = '100vh';
-        document.body.classList.add('scroll-locked');
-
-        lastWheelTime = 0;
-        isTransitioning = false;
-        scrollAccumulator = 0;
-        touchAccumulator = 0;
-
-        document.addEventListener('wheel', handleWheelWithMomentum, { passive: false });
-    }
-
-    function unlockScroll() {
-        if (!isScrollLocked) return;
-
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-        isScrollLocked = false;
-
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
-        document.body.style.position = '';
-        document.body.style.height = '';
-        document.body.classList.remove('scroll-locked');
-
-        document.removeEventListener('wheel', handleWheelWithMomentum);
-        clearTimeout(wheelTimeout);
-        clearTimeout(momentumTimer);
-
-        scrollAccumulator = 0;
-        touchAccumulator = 0;
-        isAnimating = false;
-
-        if (animationFrame) {
-            cancelAnimationFrame(animationFrame);
-            animationFrame = null;
-        }
-    }
-
-    function showEdgeFeedback(position) {
-        const wrapper = document.querySelector('.block-club__slider-wrapper');
-        if (!wrapper) return;
-
-        wrapper.classList.remove('edge-start', 'edge-end', 'edge-unlock');
-
-        if (position === 'start') {
-            wrapper.classList.add('edge-start');
-        } else if (position === 'end') {
-            wrapper.classList.add('edge-end');
-        } else if (position === 'unlock') {
-            wrapper.classList.add('edge-unlock');
-        }
-
-        clearTimeout(window.edgeTimeout);
-        window.edgeTimeout = setTimeout(() => {
-            wrapper.classList.remove('edge-start', 'edge-end', 'edge-unlock');
-        }, 800);
-
-        if (navigator.vibrate) {
-            navigator.vibrate(50);
-        }
-    }
-
-    function getScrollbarWidth() {
-        return window.innerWidth - document.documentElement.clientWidth;
-    }
-
-    function checkBlockPosition() {
-        if (!blockClub) return;
-
-        const rect = blockClub.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-
-        const blockMiddle = rect.top + rect.height / 2;
-        const screenMiddle = windowHeight / 2;
-        const threshold = 100;
-
-        const isInView = blockMiddle < screenMiddle + threshold &&
-            blockMiddle > screenMiddle - threshold;
-
-        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
-        lastScrollY = currentScrollY;
-
-        if (isInView) {
-            if (!isScrollLocked && swiperInstance && swiperInstance.slides.length > 1) {
-                const isEnd = isEndReached();
-                const isStart = isStartReached();
-
-                if (scrollDirection === 'down' && !isEnd) {
-                    lockScroll();
-                } else if (scrollDirection === 'up' && !isStart) {
-                    lockScroll();
-                } else if (scrollDirection === 'down' && isEnd) {
-                    if (isScrollLocked) unlockScroll();
-                } else if (scrollDirection === 'up' && isStart) {
-                    if (isScrollLocked) unlockScroll();
-                }
-            }
-        } else {
-            if (isScrollLocked) {
-                unlockScroll();
-            }
-        }
-    }
-
-    let scrollTimeout = null;
-    window.addEventListener('scroll', function () {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(checkBlockPosition, 50);
-    }, { passive: true });
-
-    let resizeTimeout = null;
-    window.addEventListener('resize', function () {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            if (isScrollLocked) {
-                setTimeout(checkBlockPosition, 100);
-            }
-            if (swiperInstance) {
-                const isMobile = isMobileDevice();
-                swiperInstance.params.touchRatio = isMobile ? 1.2 : 1;
-                swiperInstance.params.spaceBetween = 20;
-                swiperInstance.params.slidesOffsetAfter = isMobile ? 19 : 0;
-                swiperInstance.update();
-
-                if (isMobile) {
-                    setTimeout(() => {
-                        updateSwiperPosition();
-                        checkMobileEdges();
-                    }, 100);
-                }
-            }
-        }, 200);
-    }, { passive: true });
-
-    setTimeout(() => {
-        checkBlockPosition();
-        if (isMobileDevice()) {
-            setTimeout(() => {
-                updateSwiperPosition();
-                checkMobileEdges();
-            }, 300);
-        }
-    }, 300);
-
-    document.addEventListener('keydown', function (e) {
-        if (!isScrollLocked) return;
-
-        const currentTime = Date.now();
-        if (currentTime - lastWheelTime < SPEED_CONFIG.wheelCooldown) return;
-        lastWheelTime = currentTime;
-
-        const speed = SPEED_CONFIG.defaultSpeed;
-
-        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-            e.preventDefault();
-            if (swiperInstance && !isEndReached()) {
-                swiperInstance.slideNext(speed);
-                isTransitioning = true;
-                setTimeout(() => {
-                    isTransitioning = false;
-                    if (isMobileDevice()) {
-                        updateSwiperPosition();
-                    }
-                }, speed + SPEED_CONFIG.transitionBuffer);
-            } else if (swiperInstance && isEndReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('end');
-            }
-        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-            e.preventDefault();
-            if (swiperInstance && !isStartReached()) {
-                swiperInstance.slidePrev(speed);
-                isTransitioning = true;
-                setTimeout(() => {
-                    isTransitioning = false;
-                    if (isMobileDevice()) {
-                        updateSwiperPosition();
-                    }
-                }, speed + SPEED_CONFIG.transitionBuffer);
-            } else if (swiperInstance && isStartReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('start');
-            }
-        }
-    });
-
-    window.addEventListener('beforeunload', function () {
-        unlockScroll();
-        clearTimeout(wheelTimeout);
-        clearTimeout(window.edgeTimeout);
-        clearTimeout(scrollTimeout);
-        clearTimeout(resizeTimeout);
-        clearTimeout(momentumTimer);
-        if (animationFrame) {
-            cancelAnimationFrame(animationFrame);
-        }
-    });
-}
-*/
-/*
 const blockClub = document.getElementById('block-club');
 if (blockClub) {
     const swiperElement = blockClub.querySelector('.swiper');
@@ -1712,866 +943,13 @@ if (blockClub) {
             const slide = slides[0];
             const slideStyles = window.getComputedStyle(slide);
             const marginRight = parseFloat(slideStyles.marginRight) || 0;
-            const width = slide.offsetWidth + marginRight;
-            return width;
+            return slide.offsetWidth + marginRight;
         }
-        return 370;
-    }
-
-    function getMaxTranslate() {
-        if (!swiperInstance) return 0;
-
-        const slides = swiperInstance.slides;
-        const slideWidth = getSlideWidth();
-        const totalSlides = slides.length;
-        const containerWidth = swiperElement.offsetWidth;
-
-        const isMobile = isMobileDevice();
-        const paddingOffset = isMobile ? 19 : 0;
-
-        const totalWidth = totalSlides * slideWidth;
-        const maxTranslate = Math.max(0, totalWidth - containerWidth + paddingOffset);
-
-        return maxTranslate;
-    }
-
-    function isEndReached() {
-        if (!swiperInstance) return true;
-
-        const isMobile = isMobileDevice();
-        if (!isMobile) {
-            return swiperInstance.isEnd;
-        }
-
-        const wrapper = swiperElement.querySelector('.swiper-wrapper');
-        if (!wrapper) return true;
-
-        const transform = wrapper.style.transform;
-        const match = transform.match(/translate3d\((-?\d+\.?\d*)px/);
-        if (!match) return false;
-
-        const currentTranslate = Math.abs(parseFloat(match[1]));
-        const maxTranslate = getMaxTranslate();
-
-        return currentTranslate >= maxTranslate - 1;
-    }
-
-    function isStartReached() {
-        if (!swiperInstance) return true;
-
-        const isMobile = isMobileDevice();
-        if (!isMobile) {
-            return swiperInstance.isBeginning;
-        }
-
-        const wrapper = swiperElement.querySelector('.swiper-wrapper');
-        if (!wrapper) return true;
-
-        const transform = wrapper.style.transform;
-        const match = transform.match(/translate3d\((-?\d+\.?\d*)px/);
-        if (!match) return true;
-
-        const currentTranslate = parseFloat(match[1]);
-        return currentTranslate >= -1;
-    }
-
-    function updateSwiperPosition() {
-        if (!swiperInstance || !isMobileDevice()) return;
-
-        const wrapper = swiperElement.querySelector('.swiper-wrapper');
-        if (!wrapper) return;
-
-        const activeIndex = swiperInstance.activeIndex;
-        const slideWidth = getSlideWidth();
-        const maxTranslate = getMaxTranslate();
-        const targetTranslate = Math.min(activeIndex * slideWidth, maxTranslate);
-
-        if (Math.abs(swiperInstance.translate + targetTranslate) > 1) {
-            swiperInstance.setTranslate(-targetTranslate);
-            swiperInstance.update();
-        }
-    }
-
-    if (swiperElement && !swiperElement.swiper) {
-        const isMobile = isMobileDevice();
-
-        swiperInstance = new Swiper(swiperElement, {
-            slidesPerView: 'auto',
-            spaceBetween: 20,
-            mousewheel: false,
-            speed: SPEED_CONFIG.defaultSpeed,
-            effect: 'slide',
-            slidesPerGroup: 1,
-            centeredSlides: false,
-            watchOverflow: true,
-            resistance: true,
-            resistanceRatio: 0,
-            touchRatio: isMobile ? 1.2 : 1,
-            touchAngle: 45,
-            simulateTouch: true,
-            shortSwipes: true,
-            longSwipes: false,
-            autoplay: false,
-            easing: 'easeOutCubic',
-            watchSlidesProgress: true,
-            watchSlidesVisibility: true,
-            grabCursor: false,
-            preventInteractionOnTransition: true,
-            slidesOffsetAfter: isMobile ? 19 : 0,
-            autoHeight: false,
-            on: {
-                slideChange: function () {
-                    updateSlideStates();
-                },
-                slideChangeTransitionEnd: function () {
-                    isTransitioning = false;
-                    isAnimating = false;
-                    if (isMobile) {
-                        updateSwiperPosition();
-                        checkMobileEdges();
-                    }
-                },
-                update: function () {
-                    this.updateSlides();
-                },
-                reachEnd: function () {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('end');
-                },
-                reachBeginning: function () {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('start');
-                },
-                init: function () {
-                    this.update();
-                    setTimeout(() => {
-                        this.slideTo(0, 0);
-                        if (isMobile) {
-                            setTimeout(() => {
-                                const maxTranslate = getMaxTranslate();
-                                this.params.slidesOffsetAfter = 19;
-                                this.update();
-                                updateSwiperPosition();
-                            }, 100);
-                        }
-                    }, 50);
-                },
-                setTranslate: function (translate) {
-                    if (isMobile) {
-                        const maxTranslate = getMaxTranslate();
-                        if (Math.abs(translate) > maxTranslate) {
-                            translate = -maxTranslate;
-                        }
-                    }
-                    this.wrapperEl.style.transform = `translate3d(${translate}px, 0px, 0px)`;
-                }
-            }
-        });
-
-        setTimeout(() => {
-            if (swiperInstance) {
-                swiperInstance.update();
-                if (isMobileDevice()) {
-                    const maxTranslate = getMaxTranslate();
-                    swiperInstance.params.slidesOffsetAfter = 19;
-                    swiperInstance.update();
-                    updateSwiperPosition();
-                }
-                isInitialized = true;
-            }
-        }, 200);
-
-    } else if (swiperElement && swiperElement.swiper) {
-        swiperInstance = swiperElement.swiper;
-        const isMobile = isMobileDevice();
-        Object.assign(swiperInstance.params, {
-            slidesPerView: 'auto',
-            slidesPerGroup: 1,
-            slidesPerGroupAuto: false,
-            speed: SPEED_CONFIG.defaultSpeed,
-            longSwipes: false,
-            resistanceRatio: 0,
-            easing: 'easeOutCubic',
-            watchSlidesProgress: true,
-            watchSlidesVisibility: true,
-            watchOverflow: true,
-            touchRatio: isMobile ? 1.2 : 1,
-            spaceBetween: 20,
-            slidesOffsetAfter: isMobile ? 19 : 0
-        });
-        swiperInstance.update();
-        if (isMobile) {
-            setTimeout(updateSwiperPosition, 100);
-        }
-        isInitialized = true;
-    }
-
-    function checkMobileEdges() {
-        if (!isMobileDevice() || !swiperInstance) return;
-
-        const isEnd = isEndReached();
-        const isStart = isStartReached();
-
-        if (isEnd) {
-            unlockScrollSmooth();
-            showEdgeFeedback('end');
-        } else if (isStart) {
-            unlockScrollSmooth();
-            showEdgeFeedback('start');
-        }
-    }
-
-    if (swiperInstance) {
-        const originalSlideNext = swiperInstance.slideNext;
-        const originalSlidePrev = swiperInstance.slidePrev;
-
-        swiperInstance.slideNext = function (speed) {
-            const isMobile = isMobileDevice();
-
-            if (isMobile) {
-                if (isEndReached()) {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('end');
-                    return false;
-                }
-
-                const nextIndex = this.activeIndex + 1;
-                const maxIndex = this.slides.length - 1;
-
-                if (nextIndex > maxIndex) {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('end');
-                    return false;
-                }
-
-                const result = originalSlideNext.call(this, speed);
-                setTimeout(() => {
-                    updateSwiperPosition();
-                }, speed || this.params.speed);
-                return result;
-            } else {
-                if (this.isEnd || this.activeIndex + 1 >= this.slides.length) {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('end');
-                    return false;
-                }
-                return originalSlideNext.call(this, speed);
-            }
-        };
-
-        swiperInstance.slidePrev = function (speed) {
-            const isMobile = isMobileDevice();
-
-            if (isMobile) {
-                if (isStartReached()) {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('start');
-                    return false;
-                }
-
-                const result = originalSlidePrev.call(this, speed);
-                setTimeout(() => {
-                    updateSwiperPosition();
-                }, speed || this.params.speed);
-                return result;
-            } else {
-                if (this.isBeginning || this.activeIndex - 1 < 0) {
-                    unlockScrollSmooth();
-                    showEdgeFeedback('start');
-                    return false;
-                }
-                return originalSlidePrev.call(this, speed);
-            }
-        };
-    }
-
-    function calculateSpeedFromAccumulator(accumulator) {
-        const isMobile = isMobileDevice();
-        const minSpeed = isMobile ? SPEED_CONFIG.mobile.minSpeed : SPEED_CONFIG.minSpeed;
-        const maxSpeed = isMobile ? SPEED_CONFIG.mobile.maxSpeed : SPEED_CONFIG.maxSpeed;
-
-        const speedFactor = Math.min(accumulator / 100, 3);
-        let speed = SPEED_CONFIG.defaultSpeed / (1 + speedFactor * 0.3);
-        speed = Math.max(minSpeed, Math.min(speed, maxSpeed));
-
-        if (accumulator > 200) {
-            speed = speed * 0.9;
-        }
-
-        return Math.round(speed);
-    }
-
-    function handleWheelWithMomentum(e) {
-        if (!isScrollLocked || !swiperInstance) return;
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        const delta = e.deltaY;
-        const currentTime = Date.now();
-
-        scrollAccumulator += delta;
-
-        if (isAnimating) {
-            return;
-        }
-
-        const absAccumulator = Math.abs(scrollAccumulator);
-        const threshold = isMobileDevice() ? SPEED_CONFIG.mobile.scrollThreshold : SPEED_CONFIG.scrollThreshold;
-
-        if (absAccumulator < threshold) {
-            return;
-        }
-
-        let remainingAccumulator = scrollAccumulator;
-        let speed = calculateSpeedFromAccumulator(absAccumulator);
-        scrollAccumulator = 0;
-
-        const direction = remainingAccumulator > 0 ? 1 : -1;
-
-        if (direction > 0 && isEndReached()) {
-            unlockScrollSmooth();
-            showEdgeFeedback('end');
-            return;
-        }
-        if (direction < 0 && isStartReached()) {
-            unlockScrollSmooth();
-            showEdgeFeedback('start');
-            return;
-        }
-
-        isAnimating = true;
-        isTransitioning = true;
-
-        if (direction > 0) {
-            swiperInstance.slideNext(speed);
-        } else {
-            swiperInstance.slidePrev(speed);
-        }
-
-        clearTimeout(wheelTimeout);
-        wheelTimeout = setTimeout(() => {
-            isTransitioning = false;
-            isAnimating = false;
-        }, speed + SPEED_CONFIG.transitionBuffer);
-
-        lastWheelTime = currentTime;
-    }
-
-    let touchAccumulator = 0;
-    let touchStartY = 0;
-    let touchStartX = 0;
-    let isSwipingHorizontally = false;
-    let momentumTimer = null;
-    let lastTouchEndTime = 0;
-
-    document.addEventListener('touchstart', function (e) {
-        if (!isScrollLocked) return;
-
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        touchAccumulator = 0;
-        isSwipingHorizontally = false;
-
-        clearTimeout(momentumTimer);
-    }, { passive: true });
-
-    document.addEventListener('touchmove', function (e) {
-        if (!isScrollLocked || !swiperInstance || isTransitioning) return;
-
-        const deltaX = touchStartX - e.touches[0].clientX;
-        const deltaY = touchStartY - e.touches[0].clientY;
-
-        if (!isSwipingHorizontally && Math.abs(deltaX) > 10) {
-            isSwipingHorizontally = true;
-            e.preventDefault();
-        }
-
-        const touchDelta = isSwipingHorizontally ? deltaX : deltaY;
-        touchAccumulator += touchDelta;
-
-        const threshold = isMobileDevice() ? SPEED_CONFIG.mobile.scrollThreshold : SPEED_CONFIG.scrollThreshold;
-
-        if (Math.abs(touchAccumulator) > threshold) {
-            const direction = touchAccumulator > 0 ? 1 : -1;
-            const isLongSwipe = Math.abs(touchAccumulator) > (isMobileDevice() ? SPEED_CONFIG.mobile.longSwipeThreshold : 200);
-            let speed = calculateSpeedFromAccumulator(Math.abs(touchAccumulator));
-
-            if (isLongSwipe) {
-                speed = Math.max(SPEED_CONFIG.mobile.minSpeed, speed * 0.7);
-            }
-
-            if (direction > 0 && isEndReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('end');
-                touchAccumulator = 0;
-                return;
-            }
-            if (direction < 0 && isStartReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('start');
-                touchAccumulator = 0;
-                return;
-            }
-
-            if (direction > 0) {
-                swiperInstance.slideNext(speed);
-                isTransitioning = true;
-                setTimeout(() => {
-                    isTransitioning = false;
-                    if (isMobileDevice()) {
-                        updateSwiperPosition();
-                    }
-                }, speed + SPEED_CONFIG.transitionBuffer);
-            } else {
-                swiperInstance.slidePrev(speed);
-                isTransitioning = true;
-                setTimeout(() => {
-                    isTransitioning = false;
-                    if (isMobileDevice()) {
-                        updateSwiperPosition();
-                    }
-                }, speed + SPEED_CONFIG.transitionBuffer);
-            }
-
-            touchAccumulator = 0;
-            touchStartY = e.touches[0].clientY;
-            touchStartX = e.touches[0].clientX;
-        }
-    }, { passive: false });
-
-    document.addEventListener('touchend', function (e) {
-        if (!isScrollLocked || !swiperInstance || isTransitioning) return;
-
-        clearTimeout(momentumTimer);
-        lastTouchEndTime = Date.now();
-
-        if (Math.abs(touchAccumulator) > 30) {
-            const direction = touchAccumulator > 0 ? 1 : -1;
-            const speed = calculateSpeedFromAccumulator(Math.abs(touchAccumulator) * 1.5);
-
-            if (direction > 0 && isEndReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('end');
-                touchAccumulator = 0;
-                return;
-            }
-            if (direction < 0 && isStartReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('start');
-                touchAccumulator = 0;
-                return;
-            }
-
-            momentumTimer = setTimeout(() => {
-                if (direction > 0) {
-                    swiperInstance.slideNext(speed);
-                    isTransitioning = true;
-                    setTimeout(() => {
-                        isTransitioning = false;
-                        if (isMobileDevice()) {
-                            updateSwiperPosition();
-                        }
-                    }, speed + SPEED_CONFIG.transitionBuffer);
-                } else {
-                    swiperInstance.slidePrev(speed);
-                    isTransitioning = true;
-                    setTimeout(() => {
-                        isTransitioning = false;
-                        if (isMobileDevice()) {
-                            updateSwiperPosition();
-                        }
-                    }, speed + SPEED_CONFIG.transitionBuffer);
-                }
-            }, 50);
-        }
-    }, { passive: true });
-
-    function updateSlideStates() {
-        if (!swiperInstance) return;
-        const slides = swiperInstance.slides;
-        slides.forEach((slide, index) => {
-            slide.classList.remove('swiper-slide-prev', 'swiper-slide-next');
-            if (index === swiperInstance.activeIndex) {
-                slide.classList.add('swiper-slide-active');
-            } else if (index === swiperInstance.activeIndex - 1) {
-                slide.classList.add('swiper-slide-prev');
-            } else if (index === swiperInstance.activeIndex + 1) {
-                slide.classList.add('swiper-slide-next');
-            }
-        });
-    }
-
-    function unlockScrollSmooth() {
-        if (!isScrollLocked) return;
-
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        document.body.classList.remove('scroll-locked');
-
-        isScrollLocked = false;
-        document.removeEventListener('wheel', handleWheelWithMomentum);
-        clearTimeout(wheelTimeout);
-        clearTimeout(momentumTimer);
-
-        scrollAccumulator = 0;
-        touchAccumulator = 0;
-        isAnimating = false;
-
-        if (animationFrame) {
-            cancelAnimationFrame(animationFrame);
-            animationFrame = null;
-        }
-
-        window.scrollTo(0, scrollY);
-    }
-
-    function lockScroll() {
-        if (isScrollLocked) return;
-
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-        isScrollLocked = true;
-        document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = getScrollbarWidth() + 'px';
-        document.body.style.position = 'relative';
-        document.body.style.height = '100vh';
-        document.body.classList.add('scroll-locked');
-
-        lastWheelTime = 0;
-        isTransitioning = false;
-        scrollAccumulator = 0;
-        touchAccumulator = 0;
-
-        document.addEventListener('wheel', handleWheelWithMomentum, { passive: false });
-    }
-
-    function unlockScroll() {
-        if (!isScrollLocked) return;
-
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-        isScrollLocked = false;
-
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
-        document.body.style.position = '';
-        document.body.style.height = '';
-        document.body.classList.remove('scroll-locked');
-
-        document.removeEventListener('wheel', handleWheelWithMomentum);
-        clearTimeout(wheelTimeout);
-        clearTimeout(momentumTimer);
-
-        scrollAccumulator = 0;
-        touchAccumulator = 0;
-        isAnimating = false;
-
-        if (animationFrame) {
-            cancelAnimationFrame(animationFrame);
-            animationFrame = null;
-        }
-    }
-
-    function showEdgeFeedback(position) {
-        const wrapper = document.querySelector('.block-club__slider-wrapper');
-        if (!wrapper) return;
-
-        wrapper.classList.remove('edge-start', 'edge-end', 'edge-unlock');
-
-        if (position === 'start') {
-            wrapper.classList.add('edge-start');
-        } else if (position === 'end') {
-            wrapper.classList.add('edge-end');
-        } else if (position === 'unlock') {
-            wrapper.classList.add('edge-unlock');
-        }
-
-        clearTimeout(window.edgeTimeout);
-        window.edgeTimeout = setTimeout(() => {
-            wrapper.classList.remove('edge-start', 'edge-end', 'edge-unlock');
-        }, 800);
-
-        if (navigator.vibrate) {
-            navigator.vibrate(50);
-        }
-    }
-
-    function getScrollbarWidth() {
-        return window.innerWidth - document.documentElement.clientWidth;
-    }
-
-    // ОСНОВНАЯ ФУНКЦИЯ - ПЛАВНАЯ БЛОКИРОВКА НА 50% БЕЗ РЫВКОВ
-    function checkBlockPosition() {
-        if (!blockClub || !swiperInstance || !isInitialized) return;
-
-        const rect = blockClub.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-
-        // Проверяем видимость блока
-        const isVisible = rect.top < windowHeight && rect.bottom > 0;
-
-        if (!isVisible) {
-            if (isScrollLocked) {
-                unlockScroll();
-            }
-            return;
-        }
-
-        // Вычисляем позицию блока относительно окна
-        const blockTop = rect.top;
-        const blockBottom = rect.bottom;
-        const blockHeight = rect.height;
-        const blockCenter = rect.top + blockHeight / 2;
-        const windowCenter = windowHeight / 2;
-
-        // Текущий скролл и направление
-        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
-        lastScrollY = currentScrollY;
-
-        // Проверяем достижение краев слайдера
-        const isEnd = isEndReached();
-        const isStart = isStartReached();
-
-        // Зона активации - центр блока должен быть в центре экрана с допуском
-        const activationZone = windowHeight * 0.2; // 20% от высоты окна
-        const isInActivationZone = Math.abs(blockCenter - windowCenter) < activationZone;
-
-        // Проверка, что блок занимает значительную часть экрана
-        const isBlockSubstantial = blockHeight > windowHeight * 0.3;
-
-        // Основная логика блокировки
-        if (isInActivationZone && isBlockSubstantial) {
-            // Блок в зоне активации
-            if (!isScrollLocked && swiperInstance.slides.length > 1) {
-                // Проверяем направление скролла и края слайдера
-                if (scrollDirection === 'down' && !isEnd) {
-                    lockScroll();
-                } else if (scrollDirection === 'up' && !isStart) {
-                    lockScroll();
-                } else if (scrollDirection === 'down' && isEnd) {
-                    // Достигли конца, но все равно блокируем, чтобы не дергало
-                    if (!isScrollLocked) lockScroll();
-                } else if (scrollDirection === 'up' && isStart) {
-                    // Достигли начала, но все равно блокируем
-                    if (!isScrollLocked) lockScroll();
-                }
-            }
-        } else {
-            // Блок вне зоны активации - разблокируем только если скролл заблокирован
-            if (isScrollLocked) {
-                // Проверяем, что блок действительно вышел из зоны
-                const isOutOfZone = Math.abs(blockCenter - windowCenter) > activationZone * 1.2;
-                if (isOutOfZone) {
-                    unlockScroll();
-                }
-            }
-        }
-
-        // Дополнительная проверка: если блок полностью виден и центрирован
-        if (blockTop >= 0 && blockBottom <= windowHeight && Math.abs(blockCenter - windowCenter) < windowHeight * 0.1) {
-            if (!isScrollLocked && swiperInstance.slides.length > 1) {
-                lockScroll();
-            }
-        }
-    }
-
-    // Обработчик скролла с оптимизацией
-    let scrollTimeout = null;
-    let scrollRAF = null;
-
-    window.addEventListener('scroll', function () {
-        if (scrollRAF) {
-            cancelAnimationFrame(scrollRAF);
-        }
-
-        scrollRAF = requestAnimationFrame(() => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                checkBlockPosition();
-                scrollRAF = null;
-            }, 20);
-        });
-    }, { passive: true });
-
-    // Обработчик touchmove для мобильных
-    let touchScrollTimeout = null;
-    if (isMobileDevice()) {
-        document.addEventListener('touchmove', function () {
-            clearTimeout(touchScrollTimeout);
-            touchScrollTimeout = setTimeout(() => {
-                checkBlockPosition();
-            }, 30);
-        }, { passive: true });
-    }
-
-    let resizeTimeout = null;
-    window.addEventListener('resize', function () {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            if (isScrollLocked) {
-                setTimeout(checkBlockPosition, 100);
-            }
-            if (swiperInstance) {
-                const isMobile = isMobileDevice();
-                swiperInstance.params.touchRatio = isMobile ? 1.2 : 1;
-                swiperInstance.params.spaceBetween = 20;
-                swiperInstance.params.slidesOffsetAfter = isMobile ? 19 : 0;
-                swiperInstance.update();
-
-                if (isMobile) {
-                    setTimeout(() => {
-                        updateSwiperPosition();
-                        checkMobileEdges();
-                    }, 100);
-                }
-            }
-        }, 200);
-    }, { passive: true });
-
-    // Запускаем проверку при загрузке
-    setTimeout(() => {
-        checkBlockPosition();
-        if (isMobileDevice()) {
-            setTimeout(() => {
-                updateSwiperPosition();
-                checkMobileEdges();
-            }, 300);
-        }
-    }, 300);
-
-    // Интервал для надежности
-    let intervalCheck = setInterval(() => {
-        if (!isScrollLocked) {
-            checkBlockPosition();
-        }
-    }, 500);
-
-    document.addEventListener('keydown', function (e) {
-        if (!isScrollLocked) return;
-
-        const currentTime = Date.now();
-        if (currentTime - lastWheelTime < SPEED_CONFIG.wheelCooldown) return;
-        lastWheelTime = currentTime;
-
-        const speed = SPEED_CONFIG.defaultSpeed;
-
-        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-            e.preventDefault();
-            if (swiperInstance && !isEndReached()) {
-                swiperInstance.slideNext(speed);
-                isTransitioning = true;
-                setTimeout(() => {
-                    isTransitioning = false;
-                    if (isMobileDevice()) {
-                        updateSwiperPosition();
-                    }
-                }, speed + SPEED_CONFIG.transitionBuffer);
-            } else if (swiperInstance && isEndReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('end');
-            }
-        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-            e.preventDefault();
-            if (swiperInstance && !isStartReached()) {
-                swiperInstance.slidePrev(speed);
-                isTransitioning = true;
-                setTimeout(() => {
-                    isTransitioning = false;
-                    if (isMobileDevice()) {
-                        updateSwiperPosition();
-                    }
-                }, speed + SPEED_CONFIG.transitionBuffer);
-            } else if (swiperInstance && isStartReached()) {
-                unlockScrollSmooth();
-                showEdgeFeedback('start');
-            }
-        }
-    });
-
-    window.addEventListener('beforeunload', function () {
-        unlockScroll();
-        clearTimeout(wheelTimeout);
-        clearTimeout(window.edgeTimeout);
-        clearTimeout(scrollTimeout);
-        clearTimeout(resizeTimeout);
-        clearTimeout(momentumTimer);
-        clearInterval(intervalCheck);
-        if (animationFrame) {
-            cancelAnimationFrame(animationFrame);
-        }
-        if (scrollRAF) {
-            cancelAnimationFrame(scrollRAF);
-        }
-    });
-}*/
-
-const blockClub = document.getElementById('block-club');
-if (blockClub) {
-    console.log('🏗️ Инициализация блока block-club');
-    const swiperElement = blockClub.querySelector('.swiper');
-
-    let isScrollLocked = false;
-    let isTransitioning = false;
-    let wheelTimeout = null;
-    let lastWheelTime = 0;
-    let lastScrollY = 0;
-
-    let scrollAccumulator = 0;
-    let isAnimating = false;
-    let animationFrame = null;
-
-    let swiperInstance = null;
-
-    let isInitialized = false;
-    let lockTimeout = null;
-
-    function isMobileDevice() {
-        const result = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-            || window.innerWidth <= 768;
-        console.log(`📱 isMobileDevice: ${result} (ширина: ${window.innerWidth})`);
-        return result;
-    }
-
-    const SPEED_CONFIG = {
-        minSpeed: 400,
-        maxSpeed: 1000,
-        defaultSpeed: 700,
-        wheelCooldown: 100,
-        transitionBuffer: 50,
-        scrollThreshold: 30,
-        mobile: {
-            scrollThreshold: 20,
-            minSpeed: 300,
-            maxSpeed: 800,
-            longSwipeThreshold: 150
-        }
-    };
-    console.log('⚙️ SPEED_CONFIG загружен:', SPEED_CONFIG);
-
-    function getSlideWidth() {
-        const slides = swiperElement.querySelectorAll('.swiper-slide');
-        if (slides.length > 0) {
-            const slide = slides[0];
-            const slideStyles = window.getComputedStyle(slide);
-            const marginRight = parseFloat(slideStyles.marginRight) || 0;
-            const width = slide.offsetWidth + marginRight;
-            console.log(`📐 Ширина слайда: ${width}px`);
-            return width;
-        }
-        console.warn('⚠️ Слайды не найдены, ширина по умолчанию 370px');
         return 370;
     }
 
     function getMaxTranslate() {
         if (!swiperInstance) {
-            console.warn('⚠️ Swiper не инициализирован, maxTranslate = 0');
             return 0;
         }
 
@@ -2584,88 +962,67 @@ if (blockClub) {
         const paddingOffset = isMobile ? 19 : 0;
 
         const totalWidth = totalSlides * slideWidth;
-        const maxTranslate = Math.max(0, totalWidth - containerWidth + paddingOffset);
-
-        console.log(`📊 maxTranslate: ${maxTranslate}px (слайдов: ${totalSlides}, ширина контейнера: ${containerWidth}px)`);
-        return maxTranslate;
+        return Math.max(0, totalWidth - containerWidth + paddingOffset);
     }
 
     function isEndReached() {
         if (!swiperInstance) {
-            console.warn('⚠️ Swiper не инициализирован, isEndReached = true');
             return true;
         }
 
         const isMobile = isMobileDevice();
         if (!isMobile) {
-            const result = swiperInstance.isEnd;
-            console.log(`🔚 isEndReached (десктоп): ${result}`);
-            return result;
+            return swiperInstance.isEnd;
         }
 
         const wrapper = swiperElement.querySelector('.swiper-wrapper');
         if (!wrapper) {
-            console.warn('⚠️ Wrapper не найден, isEndReached = true');
             return true;
         }
 
         const transform = wrapper.style.transform;
         const match = transform.match(/translate3d\((-?\d+\.?\d*)px/);
         if (!match) {
-            console.warn('⚠️ Transform не найден, isEndReached = false');
             return false;
         }
 
         const currentTranslate = Math.abs(parseFloat(match[1]));
         const maxTranslate = getMaxTranslate();
-        const result = currentTranslate >= maxTranslate - 1;
-
-        console.log(`🔚 isEndReached (мобильный): ${result} (текущий: ${currentTranslate}, максимум: ${maxTranslate})`);
-        return result;
+        return currentTranslate >= maxTranslate - 1;
     }
 
     function isStartReached() {
         if (!swiperInstance) {
-            console.warn('⚠️ Swiper не инициализирован, isStartReached = true');
             return true;
         }
 
         const isMobile = isMobileDevice();
         if (!isMobile) {
-            const result = swiperInstance.isBeginning;
-            console.log(`🔛 isStartReached (десктоп): ${result}`);
-            return result;
+            return swiperInstance.isBeginning;
         }
 
         const wrapper = swiperElement.querySelector('.swiper-wrapper');
         if (!wrapper) {
-            console.warn('⚠️ Wrapper не найден, isStartReached = true');
             return true;
         }
 
         const transform = wrapper.style.transform;
         const match = transform.match(/translate3d\((-?\d+\.?\d*)px/);
         if (!match) {
-            console.warn('⚠️ Transform не найден, isStartReached = true');
             return true;
         }
 
         const currentTranslate = parseFloat(match[1]);
-        const result = currentTranslate >= -1;
-
-        console.log(`🔛 isStartReached (мобильный): ${result} (текущий: ${currentTranslate})`);
-        return result;
+        return currentTranslate >= -1;
     }
 
     function updateSwiperPosition() {
         if (!swiperInstance || !isMobileDevice()) {
-            console.log('⏭️ updateSwiperPosition пропущен (не мобильный или нет swiper)');
             return;
         }
 
         const wrapper = swiperElement.querySelector('.swiper-wrapper');
         if (!wrapper) {
-            console.warn('⚠️ Wrapper не найден в updateSwiperPosition');
             return;
         }
 
@@ -2675,16 +1032,12 @@ if (blockClub) {
         const targetTranslate = Math.min(activeIndex * slideWidth, maxTranslate);
 
         if (Math.abs(swiperInstance.translate + targetTranslate) > 1) {
-            console.log(`🔄 Обновление позиции: activeIndex=${activeIndex}, targetTranslate=${targetTranslate}px`);
             swiperInstance.setTranslate(-targetTranslate);
             swiperInstance.update();
-        } else {
-            console.log(`✅ Позиция уже корректна: ${swiperInstance.translate}px`);
         }
     }
 
     if (swiperElement && !swiperElement.swiper) {
-        console.log('🆕 Создание нового экземпляра Swiper');
         const isMobile = isMobileDevice();
 
         swiperInstance = new Swiper(swiperElement, {
@@ -2713,11 +1066,9 @@ if (blockClub) {
             autoHeight: false,
             on: {
                 slideChange: function () {
-                    console.log('🔄 Событие slideChange');
                     updateSlideStates();
                 },
                 slideChangeTransitionEnd: function () {
-                    console.log('✅ slideChangeTransitionEnd завершен');
                     isTransitioning = false;
                     isAnimating = false;
                     if (isMobile) {
@@ -2726,21 +1077,17 @@ if (blockClub) {
                     }
                 },
                 update: function () {
-                    console.log('🔄 Событие update');
                     this.updateSlides();
                 },
                 reachEnd: function () {
-                    console.log('🔚 Достигнут конец слайдера');
                     unlockScrollSmooth();
                     showEdgeFeedback('end');
                 },
                 reachBeginning: function () {
-                    console.log('🔛 Достигнуто начало слайдера');
                     unlockScrollSmooth();
                     showEdgeFeedback('start');
                 },
                 init: function () {
-                    console.log('🚀 Swiper инициализирован');
                     this.update();
                     setTimeout(() => {
                         this.slideTo(0, 0);
@@ -2759,7 +1106,6 @@ if (blockClub) {
                         const maxTranslate = getMaxTranslate();
                         if (Math.abs(translate) > maxTranslate) {
                             translate = -maxTranslate;
-                            console.log(`🔄 Корректировка translate до ${translate}px (макс: ${maxTranslate}px)`);
                         }
                     }
                     this.wrapperEl.style.transform = `translate3d(${translate}px, 0px, 0px)`;
@@ -2777,12 +1123,10 @@ if (blockClub) {
                     updateSwiperPosition();
                 }
                 isInitialized = true;
-                console.log('✅ Swiper готов и инициализирован');
             }
         }, 200);
 
     } else if (swiperElement && swiperElement.swiper) {
-        console.log('♻️ Использование существующего Swiper');
         swiperInstance = swiperElement.swiper;
         const isMobile = isMobileDevice();
         Object.assign(swiperInstance.params, {
@@ -2805,21 +1149,15 @@ if (blockClub) {
             setTimeout(updateSwiperPosition, 100);
         }
         isInitialized = true;
-        console.log('✅ Существующий Swiper обновлен');
-    } else {
-        console.warn('⚠️ Swiper элемент не найден');
     }
 
     function checkMobileEdges() {
         if (!isMobileDevice() || !swiperInstance) {
-            console.log('⏭️ checkMobileEdges пропущен (не мобильный или нет swiper)');
             return;
         }
 
         const isEnd = isEndReached();
         const isStart = isStartReached();
-
-        console.log(`🔍 Проверка краев: isEnd=${isEnd}, isStart=${isStart}`);
 
         if (isEnd) {
             unlockScrollSmooth();
@@ -2831,17 +1169,14 @@ if (blockClub) {
     }
 
     if (swiperInstance) {
-        console.log('🔄 Переопределение методов slideNext/slidePrev');
         const originalSlideNext = swiperInstance.slideNext;
         const originalSlidePrev = swiperInstance.slidePrev;
 
         swiperInstance.slideNext = function (speed) {
             const isMobile = isMobileDevice();
-            console.log(`⏩ Вызов slideNext (isMobile=${isMobile})`);
 
             if (isMobile) {
                 if (isEndReached()) {
-                    console.log('🔚 Конец достигнут, разблокировка');
                     unlockScrollSmooth();
                     showEdgeFeedback('end');
                     return false;
@@ -2851,13 +1186,11 @@ if (blockClub) {
                 const maxIndex = this.slides.length - 1;
 
                 if (nextIndex > maxIndex) {
-                    console.log('🔚 Следующий слайд за пределами, разблокировка');
                     unlockScrollSmooth();
                     showEdgeFeedback('end');
                     return false;
                 }
 
-                console.log(`⏩ Переход к слайду ${nextIndex} со скоростью ${speed || this.params.speed}`);
                 const result = originalSlideNext.call(this, speed);
                 setTimeout(() => {
                     updateSwiperPosition();
@@ -2865,7 +1198,6 @@ if (blockClub) {
                 return result;
             } else {
                 if (this.isEnd || this.activeIndex + 1 >= this.slides.length) {
-                    console.log('🔚 Конец достигнут (десктоп), разблокировка');
                     unlockScrollSmooth();
                     showEdgeFeedback('end');
                     return false;
@@ -2876,17 +1208,14 @@ if (blockClub) {
 
         swiperInstance.slidePrev = function (speed) {
             const isMobile = isMobileDevice();
-            console.log(`⏪ Вызов slidePrev (isMobile=${isMobile})`);
 
             if (isMobile) {
                 if (isStartReached()) {
-                    console.log('🔛 Начало достигнуто, разблокировка');
                     unlockScrollSmooth();
                     showEdgeFeedback('start');
                     return false;
                 }
 
-                console.log(`⏪ Переход к предыдущему слайду со скоростью ${speed || this.params.speed}`);
                 const result = originalSlidePrev.call(this, speed);
                 setTimeout(() => {
                     updateSwiperPosition();
@@ -2894,7 +1223,6 @@ if (blockClub) {
                 return result;
             } else {
                 if (this.isBeginning || this.activeIndex - 1 < 0) {
-                    console.log('🔛 Начало достигнуто (десктоп), разблокировка');
                     unlockScrollSmooth();
                     showEdgeFeedback('start');
                     return false;
@@ -2917,13 +1245,11 @@ if (blockClub) {
             speed = speed * 0.9;
         }
 
-        console.log(`⚡ Рассчитана скорость: ${Math.round(speed)}ms (аккумулятор: ${accumulator})`);
         return Math.round(speed);
     }
 
     function handleWheelWithMomentum(e) {
         if (!isScrollLocked || !swiperInstance) {
-            console.log('⏭️ handleWheelWithMomentum пропущен (не заблокирован или нет swiper)');
             return;
         }
 
@@ -2934,10 +1260,8 @@ if (blockClub) {
         const currentTime = Date.now();
 
         scrollAccumulator += delta;
-        console.log(`🔄 Wheel event: delta=${delta}, аккумулятор=${scrollAccumulator}`);
 
         if (isAnimating) {
-            console.log('⏳ Анимация уже выполняется, пропуск');
             return;
         }
 
@@ -2945,7 +1269,6 @@ if (blockClub) {
         const threshold = isMobileDevice() ? SPEED_CONFIG.mobile.scrollThreshold : SPEED_CONFIG.scrollThreshold;
 
         if (absAccumulator < threshold) {
-            console.log(`⏳ Аккумулятор ${absAccumulator} < порог ${threshold}, ожидание`);
             return;
         }
 
@@ -2954,16 +1277,13 @@ if (blockClub) {
         scrollAccumulator = 0;
 
         const direction = remainingAccumulator > 0 ? 1 : -1;
-        console.log(`🎯 Направление: ${direction > 0 ? 'вперед' : 'назад'}, скорость: ${speed}ms`);
 
         if (direction > 0 && isEndReached()) {
-            console.log('🔚 Конец достигнут, разблокировка через wheel');
             unlockScrollSmooth();
             showEdgeFeedback('end');
             return;
         }
         if (direction < 0 && isStartReached()) {
-            console.log('🔛 Начало достигнуто, разблокировка через wheel');
             unlockScrollSmooth();
             showEdgeFeedback('start');
             return;
@@ -2982,7 +1302,6 @@ if (blockClub) {
         wheelTimeout = setTimeout(() => {
             isTransitioning = false;
             isAnimating = false;
-            console.log('✅ Анимация wheel завершена');
         }, speed + SPEED_CONFIG.transitionBuffer);
 
         lastWheelTime = currentTime;
@@ -2997,7 +1316,6 @@ if (blockClub) {
 
     document.addEventListener('touchstart', function (e) {
         if (!isScrollLocked) {
-            console.log('⏭️ touchstart пропущен (не заблокирован)');
             return;
         }
 
@@ -3007,12 +1325,10 @@ if (blockClub) {
         isSwipingHorizontally = false;
 
         clearTimeout(momentumTimer);
-        console.log('👆 touchstart зафиксирован');
     }, { passive: true });
 
     document.addEventListener('touchmove', function (e) {
         if (!isScrollLocked || !swiperInstance || isTransitioning) {
-            console.log('⏭️ touchmove пропущен');
             return;
         }
 
@@ -3022,7 +1338,6 @@ if (blockClub) {
         if (!isSwipingHorizontally && Math.abs(deltaX) > 10) {
             isSwipingHorizontally = true;
             e.preventDefault();
-            console.log('👆 Определен горизонтальный свайп');
         }
 
         const touchDelta = isSwipingHorizontally ? deltaX : deltaY;
@@ -3037,20 +1352,15 @@ if (blockClub) {
 
             if (isLongSwipe) {
                 speed = Math.max(SPEED_CONFIG.mobile.minSpeed, speed * 0.7);
-                console.log(`👆 Длинный свайп, скорость уменьшена до ${speed}ms`);
             }
 
-            console.log(`👆 touchmove: направление=${direction > 0 ? 'вперед' : 'назад'}, скорость=${speed}ms`);
-
             if (direction > 0 && isEndReached()) {
-                console.log('🔚 Конец достигнут (touchmove)');
                 unlockScrollSmooth();
                 showEdgeFeedback('end');
                 touchAccumulator = 0;
                 return;
             }
             if (direction < 0 && isStartReached()) {
-                console.log('🔛 Начало достигнуто (touchmove)');
                 unlockScrollSmooth();
                 showEdgeFeedback('start');
                 touchAccumulator = 0;
@@ -3065,7 +1375,6 @@ if (blockClub) {
                     if (isMobileDevice()) {
                         updateSwiperPosition();
                     }
-                    console.log('✅ touchmove анимация завершена');
                 }, speed + SPEED_CONFIG.transitionBuffer);
             } else {
                 swiperInstance.slidePrev(speed);
@@ -3075,7 +1384,6 @@ if (blockClub) {
                     if (isMobileDevice()) {
                         updateSwiperPosition();
                     }
-                    console.log('✅ touchmove анимация завершена');
                 }, speed + SPEED_CONFIG.transitionBuffer);
             }
 
@@ -3087,30 +1395,23 @@ if (blockClub) {
 
     document.addEventListener('touchend', function (e) {
         if (!isScrollLocked || !swiperInstance || isTransitioning) {
-            console.log('⏭️ touchend пропущен');
             return;
         }
 
         clearTimeout(momentumTimer);
         lastTouchEndTime = Date.now();
 
-        console.log(`👆 touchend: аккумулятор=${touchAccumulator}`);
-
         if (Math.abs(touchAccumulator) > 30) {
             const direction = touchAccumulator > 0 ? 1 : -1;
             const speed = calculateSpeedFromAccumulator(Math.abs(touchAccumulator) * 1.5);
 
-            console.log(`👆 Моментальный свайп: направление=${direction > 0 ? 'вперед' : 'назад'}, скорость=${speed}ms`);
-
             if (direction > 0 && isEndReached()) {
-                console.log('🔚 Конец достигнут (touchend)');
                 unlockScrollSmooth();
                 showEdgeFeedback('end');
                 touchAccumulator = 0;
                 return;
             }
             if (direction < 0 && isStartReached()) {
-                console.log('🔛 Начало достигнуто (touchend)');
                 unlockScrollSmooth();
                 showEdgeFeedback('start');
                 touchAccumulator = 0;
@@ -3126,7 +1427,6 @@ if (blockClub) {
                         if (isMobileDevice()) {
                             updateSwiperPosition();
                         }
-                        console.log('✅ touchend анимация завершена');
                     }, speed + SPEED_CONFIG.transitionBuffer);
                 } else {
                     swiperInstance.slidePrev(speed);
@@ -3136,7 +1436,6 @@ if (blockClub) {
                         if (isMobileDevice()) {
                             updateSwiperPosition();
                         }
-                        console.log('✅ touchend анимация завершена');
                     }, speed + SPEED_CONFIG.transitionBuffer);
                 }
             }, 50);
@@ -3145,7 +1444,6 @@ if (blockClub) {
 
     function updateSlideStates() {
         if (!swiperInstance) {
-            console.warn('⚠️ updateSlideStates: swiper не инициализирован');
             return;
         }
         const slides = swiperInstance.slides;
@@ -3159,17 +1457,14 @@ if (blockClub) {
                 slide.classList.add('swiper-slide-next');
             }
         });
-        console.log(`🔄 Обновлены состояния слайдов, активный: ${swiperInstance.activeIndex}`);
     }
 
     function unlockScrollSmooth() {
         if (!isScrollLocked) {
-            console.log('⏭️ unlockScrollSmooth: уже разблокирован');
             return;
         }
 
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        console.log(`🔓 Разблокировка скролла (scrollY=${scrollY})`);
 
         document.body.style.overflow = '';
         document.body.style.paddingRight = '';
@@ -3193,17 +1488,14 @@ if (blockClub) {
         }
 
         window.scrollTo(0, scrollY);
-        console.log('✅ Скролл разблокирован');
     }
 
     function lockScroll() {
         if (isScrollLocked) {
-            console.log('⏭️ lockScroll: уже заблокирован');
             return;
         }
 
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        console.log(`🔒 Блокировка скролла (scrollY=${scrollY})`);
 
         isScrollLocked = true;
         document.body.style.overflow = 'hidden';
@@ -3218,17 +1510,12 @@ if (blockClub) {
         touchAccumulator = 0;
 
         document.addEventListener('wheel', handleWheelWithMomentum, { passive: false });
-        console.log('✅ Скролл заблокирован');
     }
 
     function unlockScroll() {
         if (!isScrollLocked) {
-            console.log('⏭️ unlockScroll: уже разблокирован');
             return;
         }
-
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        console.log(`🔓 unlockScroll: разблокировка`);
 
         isScrollLocked = false;
 
@@ -3250,13 +1537,11 @@ if (blockClub) {
             cancelAnimationFrame(animationFrame);
             animationFrame = null;
         }
-        console.log('✅ unlockScroll: скролл разблокирован');
     }
 
     function showEdgeFeedback(position) {
         const wrapper = document.querySelector('.block-club__slider-wrapper');
         if (!wrapper) {
-            console.warn('⚠️ wrapper не найден для edge feedback');
             return;
         }
 
@@ -3264,19 +1549,15 @@ if (blockClub) {
 
         if (position === 'start') {
             wrapper.classList.add('edge-start');
-            console.log('🔛 Показан edge feedback: start');
         } else if (position === 'end') {
             wrapper.classList.add('edge-end');
-            console.log('🔚 Показан edge feedback: end');
         } else if (position === 'unlock') {
             wrapper.classList.add('edge-unlock');
-            console.log('🔓 Показан edge feedback: unlock');
         }
 
         clearTimeout(window.edgeTimeout);
         window.edgeTimeout = setTimeout(() => {
             wrapper.classList.remove('edge-start', 'edge-end', 'edge-unlock');
-            console.log('⏹️ Edge feedback скрыт');
         }, 800);
 
         if (navigator.vibrate) {
@@ -3285,9 +1566,7 @@ if (blockClub) {
     }
 
     function getScrollbarWidth() {
-        const width = window.innerWidth - document.documentElement.clientWidth;
-        console.log(`📏 Ширина скроллбара: ${width}px`);
-        return width;
+        return window.innerWidth - document.documentElement.clientWidth;
     }
 
     function checkBlockPosition() {
@@ -3299,12 +1578,10 @@ if (blockClub) {
         const windowHeight = window.innerHeight;
         const windowWidth = window.innerWidth;
 
-        // Проверяем видимость блока
         const isVisible = rect.top < windowHeight && rect.bottom > 0;
 
         if (!isVisible) {
             if (isScrollLocked) {
-                console.log('🔓 Блок невидим, разблокировка');
                 unlockScroll();
             }
             return;
@@ -3316,7 +1593,6 @@ if (blockClub) {
         const blockCenter = rect.top + blockHeight / 2;
         const windowCenter = windowHeight / 2;
 
-        // Текущий скролл и направление
         const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
         const scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
         lastScrollY = currentScrollY;
@@ -3324,18 +1600,14 @@ if (blockClub) {
         const isEnd = isEndReached();
         const isStart = isStartReached();
 
-        // 🔥 УМЕНЬШАЕМ ЗОНУ АКТИВАЦИИ ДО 10%
         const activationZone = windowHeight * 0.1;
         const isInActivationZone = Math.abs(blockCenter - windowCenter) < activationZone;
 
-        // Блок должен занимать не менее 40% экрана
         const isBlockSubstantial = blockHeight > windowHeight * 0.4;
 
-        // 🔥 НОВАЯ ПРОВЕРКА: блок должен быть достаточно близко к верху или низу
         const isBlockNearTop = blockTop < 50 && blockTop > -50;
         const isBlockNearBottom = Math.abs(blockBottom - windowHeight) < 50;
 
-        // 🎯 ОСНОВНАЯ ЛОГИКА: блокируем ТОЛЬКО когда блок прилип к краю
         const shouldLockDown = scrollDirection === 'down' &&
             (isBlockNearTop || blockTop < 30) &&
             !isEnd &&
@@ -3346,38 +1618,30 @@ if (blockClub) {
             !isStart &&
             isBlockSubstantial;
 
-        // 🔥 НОВОЕ УСЛОВИЕ: блокируем только если блок почти у края
         if (shouldLockDown || shouldLockUp) {
             if (!isScrollLocked && swiperInstance.slides.length > 1) {
-                console.log(`🔒 Блокировка: скролл ${scrollDirection}, блок у края`);
                 lockScroll();
             }
         }
-        // Разблокируем, если блок уехал далеко от зоны
         else if (isScrollLocked) {
             const isOutOfZone = Math.abs(blockCenter - windowCenter) > activationZone * 2;
             if (isOutOfZone) {
-                console.log('🔓 Разблокировка: блок вышел из зоны');
                 unlockScroll();
             }
         }
 
-        // 🔥 ДОПОЛНИТЕЛЬНАЯ ПРОВЕРКА: если блок полностью виден и занимает весь экран
         if (blockTop <= 0 && blockBottom >= windowHeight && isBlockSubstantial) {
             if (!isScrollLocked && swiperInstance.slides.length > 1) {
-                // Проверяем, что это не просто скролл мимо
                 const isNearTop = Math.abs(blockTop) < 10;
                 const isNearBottom = Math.abs(blockBottom - windowHeight) < 10;
 
                 if (isNearTop || isNearBottom) {
-                    console.log('🔒 Блокировка: блок занимает весь экран');
                     lockScroll();
                 }
             }
         }
     }
 
-    // Обработчик скролла с оптимизацией
     let scrollTimeout = null;
     let scrollRAF = null;
 
@@ -3395,7 +1659,6 @@ if (blockClub) {
         });
     }, { passive: true });
 
-    // Обработчик touchmove для мобильных
     let touchScrollTimeout = null;
     if (isMobileDevice()) {
         document.addEventListener('touchmove', function () {
@@ -3404,14 +1667,12 @@ if (blockClub) {
                 checkBlockPosition();
             }, 30);
         }, { passive: true });
-        console.log('📱 Добавлен обработчик touchmove для мобильных');
     }
 
     let resizeTimeout = null;
     window.addEventListener('resize', function () {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
-            console.log('🔄 Событие resize');
             if (isScrollLocked) {
                 setTimeout(checkBlockPosition, 100);
             }
@@ -3432,9 +1693,7 @@ if (blockClub) {
         }, 200);
     }, { passive: true });
 
-    // Запускаем проверку при загрузке
     setTimeout(() => {
-        console.log('🚀 Первоначальная проверка позиции блока');
         checkBlockPosition();
         if (isMobileDevice()) {
             setTimeout(() => {
@@ -3444,23 +1703,19 @@ if (blockClub) {
         }
     }, 300);
 
-    // Интервал для надежности
     let intervalCheck = setInterval(() => {
         if (!isScrollLocked) {
             checkBlockPosition();
         }
     }, 500);
-    console.log('🔄 Запущен интервал проверки (каждые 500ms)');
 
     document.addEventListener('keydown', function (e) {
         if (!isScrollLocked) {
-            console.log('⏭️ keydown пропущен (не заблокирован)');
             return;
         }
 
         const currentTime = Date.now();
         if (currentTime - lastWheelTime < SPEED_CONFIG.wheelCooldown) {
-            console.log('⏳ keydown: кулдаун');
             return;
         }
         lastWheelTime = currentTime;
@@ -3469,7 +1724,6 @@ if (blockClub) {
 
         if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
             e.preventDefault();
-            console.log(`⌨️ Нажата клавиша ${e.key}`);
             if (swiperInstance && !isEndReached()) {
                 swiperInstance.slideNext(speed);
                 isTransitioning = true;
@@ -3478,16 +1732,13 @@ if (blockClub) {
                     if (isMobileDevice()) {
                         updateSwiperPosition();
                     }
-                    console.log('✅ keydown анимация завершена');
                 }, speed + SPEED_CONFIG.transitionBuffer);
             } else if (swiperInstance && isEndReached()) {
-                console.log('🔚 Конец достигнут (keydown)');
                 unlockScrollSmooth();
                 showEdgeFeedback('end');
             }
         } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
             e.preventDefault();
-            console.log(`⌨️ Нажата клавиша ${e.key}`);
             if (swiperInstance && !isStartReached()) {
                 swiperInstance.slidePrev(speed);
                 isTransitioning = true;
@@ -3496,10 +1747,8 @@ if (blockClub) {
                     if (isMobileDevice()) {
                         updateSwiperPosition();
                     }
-                    console.log('✅ keydown анимация завершена');
                 }, speed + SPEED_CONFIG.transitionBuffer);
             } else if (swiperInstance && isStartReached()) {
-                console.log('🔛 Начало достигнуто (keydown)');
                 unlockScrollSmooth();
                 showEdgeFeedback('start');
             }
@@ -3507,7 +1756,6 @@ if (blockClub) {
     });
 
     window.addEventListener('beforeunload', function () {
-        console.log('🔄 beforeunload: очистка ресурсов');
         unlockScroll();
         clearTimeout(wheelTimeout);
         clearTimeout(window.edgeTimeout);
@@ -3521,10 +1769,7 @@ if (blockClub) {
         if (scrollRAF) {
             cancelAnimationFrame(scrollRAF);
         }
-        console.log('✅ Ресурсы очищены');
     });
-
-    console.log('✅ Скрипт block-club полностью загружен');
 }
 
 
