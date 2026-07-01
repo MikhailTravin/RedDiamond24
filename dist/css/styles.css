@@ -716,6 +716,11 @@ body::after {
   opacity: 1;
   pointer-events: auto;
 }
+@media (max-width: 768px) {
+  .menu-open body::after {
+    display: none;
+  }
+}
 
 body.noscroll {
   overflow: hidden;
