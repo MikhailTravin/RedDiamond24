@@ -1,101 +1,602 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Diamond</title>
+    {% include 'blocks/head.njk' %}
 </head>
 
-<body>
-    <div class="rootpage">
-        <ol class="rootpage__list">
-            <li><a target="_blank" href="home.html">Главная</a></li>
-            <li><a target="_blank" href="events.html">Мероприятия</a></li>
-            <li><a target="_blank" href="partners.html">Партнеры</a></li>
-            <li><a target="_blank" href="policy.html">Политика конфиденциальности</a></li>
-            <li><a target="_blank" href="error.html">404</a></li>
-            <li><a target="_blank" href="tecnical-page.html">Техническая страница</a></li>
-        </ol>
+<body class="preload mp">
+    <div class="main-wrapper-outer">
+        {% include 'blocks/header.njk' %}
+        <main class="main">
+
+            <div class="block-text">
+                <div class="container">
+                    <div class="block-text__content">
+                        <h1 class="title1">
+                            A Global Platform Empowering Women with Vision, Integrity, and Purpose
+                        </h1>
+                        <p>
+                            EVENTS | BUSINESS | NETWORKING | LEARNING
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block-section">
+                <div class="container">
+                    <div class="block-section__content">
+                        <div class="block-section-menu">
+                            <ul>
+                                <li>
+                                    <button data-filter="experts" type="button"
+                                        class="block-section-menu__button">ExpertS</button>
+                                </li>
+                                <li>
+                                    <button data-filter="events" type="button"
+                                        class="block-section-menu__button active">EVENTS</button>
+                                </li>
+                                <li>
+                                    <button data-filter="academy" type="button"
+                                        class="block-section-menu__button">ACADEMY</button>
+                                </li>
+                            </ul>
+                            <button type="button" class="arrow">
+                                <svg aria-hidden="true" width="9" height="6">
+                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                </svg>
+                            </button>
+                        </div>
+                        <div data-simplebar class="block-section__body">
+                            <div data-filter="experts" class="block-section__cards">
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                PSYCHOLOGIST<br>
+                                                PROF-ORIENTOLOGIST
+                                            </div>
+                                            <p>
+                                                ANNA SHCHEGOLEVA
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                10 YEARS EXP<br>
+                                                LICENSED EXPERT
+                                            </p>
+                                            <a href="https://www.instagram.com/impulse__up" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/expert1.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                International<br>
+                                                lawyer
+                                            </div>
+                                            <p>
+                                                YIANNOS GEORGIADES
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                35 YEARS EXP<br>
+                                                LICENSED EXPERT
+                                            </p>
+                                            <a href="https://www.instagram.com/yiannosgeorgiades" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/expert2.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                Strategic financial<br> leader & entrepreneur
+                                            </div>
+                                            <p>
+                                                HASMIG MEDIAN
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                10 YEARS EXP<br>
+                                                LICENSED EXPERT
+                                            </p>
+                                            <a href="https://www.instagram.com/_hm____85" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/expert3.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                HR & Business Solutions for companies and people
+                                            </div>
+                                            <p>
+                                                Marianna Hadjiandoniou
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                10 YEARS EXP<br>
+                                                LICENSED EXPERT
+                                            </p>
+                                            <a href="https://www.instagram.com/bizandlove_lady" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/expert4.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                HOLISTIC BUSINESS<br>
+                                                CONSULTANT & MENTOR
+                                            </div>
+                                            <p>
+                                                Dr. Branka van der Linden
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                10 YEARS EXP<br>
+                                                LICENSED EXPERT
+                                            </p>
+                                            <a href="https://www.instagram.com/brankavdlinden" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/expert5.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section card-section-last">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                BECOME AN EXPERT?
+                                            </div>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                JOIN OUR TEAM OF EXPERTS AND SHARE<br> YOUR INSIGHTS WITH THE WORLD!
+                                            </p>
+                                            <a href="https://wa.link/p0r4ft" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-filter="events" class="block-section__cards active">
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                RED DIAMONd AWARDS<br>
+                                                THE 6TH ELEMENT
+                                            </div>
+                                            <p>
+                                                #AWARDS #GALAEVENING
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                RESERVE TICKETS<br>
+                                                BECOME A PARTNER
+                                            </p>
+                                            <a href="https://wa.link/zhgaf9" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/image2.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                WINTER NETWORKING
+                                            </div>
+                                            <p>
+                                                #BUSINESS #NETWORKING
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                RESERVE TICKETS<br>
+                                                BECOME A PARTNER
+                                            </p>
+                                            <a href="https://wa.link/zhgaf9" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/image3.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                POWER OF SHE
+                                            </div>
+                                            <p>
+                                                #BUSINESS #NETWORKING
+                                            </p>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                RESERVE TICKETS<br>
+                                                BECOME A PARTNER
+                                            </p>
+                                            <a href="https://wa.link/zhgaf9" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-section__image">
+                                        <img src="img/image4.webp" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-section card-section-last">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                PLANNING AN EVENT?
+                                            </div>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                WE OFFER A BESPOKE EVENT PLANNING<br>
+                                                AND ORGANISATION SERVICE
+                                            </p>
+                                            <a href="https://wa.link/yrhsrn" class="arrow">
+                                                <svg aria-hidden="true" width="14" height="14">
+                                                    <use xlink:href="img/sprite.svg#arrow1"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-filter="academy" class="block-section__cards">
+                                <div class="card-section card-section-academy">
+                                    <div class="card-section__body">
+                                        <div class="card-section__top">
+                                            <div class="card-section__title">
+                                                SOMETHING GREAT<br>
+                                                IS BEING CREATED HERE!
+                                            </div>
+                                            <div class="card-section__icon">
+                                                <span>
+                                                    <svg aria-hidden="true" width="4" height="10">
+                                                        <use xlink:href="img/sprite.svg#exclamation-mark"></use>
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="card-section__bottom">
+                                            <p>
+                                                be the first to find out!
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="block-club" class="block-club">
+                <img loading="lazy" src="img/icons/logo3.svg" alt="" class="block-club__logo">
+                <div class="container">
+                    <div class="block-club__content">
+                        <div class="block-club__top">
+                            <h2 class="title2">
+                                TAILOR MADE SOLUTIONS<br>
+                                FOR YOUR BUSINESS
+                            </h2>
+                        </div>
+                        <div class="block-club__slider-wrapper">
+                            <div class="block-club__slider swiper">
+                                <div class="block-club__wrapper swiper-wrapper">
+                                    <div class="block-club__slide swiper-slide">
+                                        <div class="block-club__items">
+                                            <img src="img/icon1.webp" alt="" class="block-club__pic">
+                                            <div class="block-club__item">
+                                                <div class="block-club__title">
+                                                    RED DIAMOND<br>
+                                                    AWARDS PLATFORM
+                                                </div>
+                                                <p>
+                                                    MORE THAN 5 YEARS OF SPECTACULAR
+                                                    EVENTS HIGHLIGHTING WOMEN’S ACHIEVEMENTS
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="block-club__slide swiper-slide">
+                                        <div class="block-club__items">
+                                            <img src="img/icon1.webp" alt="" class="block-club__pic">
+                                            <div class="block-club__item">
+                                                <div class="block-club__title">
+                                                    An INSPIRING WOMEN
+                                                    COMMUNITY
+                                                </div>
+                                                <p>
+                                                    WE SHARE TRANSFORMATIONAL INDIVIDUAL STORIES AND VALUES THROUGH OUR
+                                                    RED
+                                                    DIAMOND COMMUNITY
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="block-club__slide swiper-slide">
+                                        <div class="block-club__items">
+                                            <img src="img/icon1.webp" alt="" class="block-club__pic">
+                                            <div class="block-club__item">
+                                                <div class="block-club__title">
+                                                    UNIQUE<br>
+                                                    PARTNER PLATFORM
+                                                </div>
+                                                <p>
+                                                    WE REFLECT ON VALUED PARTNERS
+                                                    THAT WE TRUST OURSELVES
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="block-club__slide swiper-slide">
+                                        <div class="block-club__items">
+                                            <img src="img/icon1.webp" alt="" class="block-club__pic">
+                                            <div class="block-club__item">
+                                                <div class="block-club__title">
+                                                    MORE THAN 1000+<br> NETWORKING<br> CONTACTS FORMED
+                                                </div>
+                                                <p>
+                                                    MORE THAN 10 YEARS OF SPECTACULAR
+                                                    EVENTS HIGHLIGHTING WOMEN’S ACHIEVEMENTS
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="block-club__slide swiper-slide">
+                                        <div class="block-club__items">
+                                            <img src="img/icon1.webp" alt="" class="block-club__pic">
+                                            <div class="block-club__item">
+                                                <div class="block-club__title">
+                                                    BESPOKE SERVICES<br>
+                                                    EVENTS & BRANDING
+                                                </div>
+                                                <p>
+                                                    MORE THAN 20 YEARS OF EXPERIENCE ALLOWS US TO OFFER ONLY THE FINEST
+                                                    SOLUTIONS TO OUR MEMBERS such as tailor made events, branding,
+                                                    marketing, social and digital
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="block-club__slide swiper-slide">
+                                        <div class="block-club__items">
+                                            <img src="img/icon1.webp" alt="" class="block-club__pic">
+                                            <div class="block-club__item">
+                                                <div class="block-club__title">
+                                                    SHARED VALUES<br>
+                                                    THAT MATTER
+                                                </div>
+                                                <p>
+                                                    THE PROJECT IS SUPPORTED BY H.E PRESIDENT OF THE REPUBLIC OF CYPRUS,
+                                                    THE
+                                                    FIRST LADY AS WELL AS THE CYPRUS CHAMBER OF COMMERCE AND INDUSTRY
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block-text block-text2">
+                <div class="container">
+                    <div class="block-text__content">
+                        <h2 class="title1">
+                            The Red Diamond International Business Women Awards, founded in 2020, honor women whose
+                            leadership, vision, and integrity create real impact.
+                        </h2>
+                        <p>
+                            More than an awards platform,<br>
+                            Red Diamond is a purpose-driven ecosystem,<br> now extended through the International<br>
+                            Business
+                            Club, connecting, empowering,<br> and supporting women who lead with<br> conscience and
+                            purpose.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block-video">
+                <video poster="img/image9.webp" loop autoplay preload muted playsinline class="desc">
+                    <source src="files/video1.mp4" type="video/mp4">
+                    <source src="files/video1.mov" type="video/quicktime">
+                    Ваш браузер не поддерживает видео.
+                </video>
+                <video poster="img/image9.webp" loop autoplay preload muted playsinline class="mob">
+                    <source src="files/video1-mob.mp4" type="video/mp4">
+                    <source src="files/video1-mob.mov" type="video/quicktime">
+                    Ваш браузер не поддерживает видео.
+                </video>
+            </div>
+
+            <div class="block-reviews">
+                <div class="container">
+                    <div class="block-reviews__content">
+                        <h2 class="title2">
+                            Appreciation From<br>
+                            Distinguished International Guests
+                        </h2>
+                        <div class="block-reviews__body">
+                            <div class="block-reviews__slider swiper">
+                                <div class="block-reviews__wrapper swiper-wrapper">
+                                    <div class="block-reviews__slide swiper-slide">
+                                        <div class="block-reviews__image">
+                                            <img src="img/image5.webp" alt="">
+
+                                        </div>
+                                        <div class="block-reviews__item">
+                                            <img src="img/icons/quate.svg" alt="" class="block-reviews__pic1">
+                                            <div class="block-reviews__title">
+                                                One of the most distinguished and memorable events
+                                            </div>
+                                            <p>
+                                                <span>MARIANNA HADJIANTONIOU</span>
+                                                General Secretary of Cyprus Paralympic Committee, Executive Committee
+                                                Member of CIBA,
+                                                Committee Member for Technology & Innovation
+                                                at Limassol Chamber of Commerce and Industry
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="block-reviews__slide swiper-slide">
+                                        <div class="block-reviews__image">
+                                            <img src="img/image6.webp" alt="">
+
+                                        </div>
+                                        <div class="block-reviews__item">
+                                            <img src="img/icons/quate.svg" alt="" class="block-reviews__pic1">
+                                            <div class="block-reviews__title">
+                                                Truly one of the finest events we have had the privilege to attend
+                                            </div>
+                                            <p>
+                                                <span> H.E PRESIDENT & FIRST LADY
+                                                </span>
+                                                OF THE REPUBLIC OF CYPRUS<br> (2013-2023)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="block-reviews__slide swiper-slide">
+                                        <div class="block-reviews__image">
+                                            <img src="img/image7.webp" alt="">
+                                        </div>
+                                        <div class="block-reviews__item">
+                                            <img src="img/icons/quate.svg" alt="" class="block-reviews__pic1">
+                                            <div class="block-reviews__title">
+                                                A first-class experience that reflected extraordinary vision
+                                            </div>
+                                            <p>
+                                                <span>H.R.H. Princess Kholoud</span>
+                                                Bint Khaled Bin Nasser Bin Abdulaziz<br> Al Saud of Saudi Arabia.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="block-founder" class="block-founder">
+                <div class="container">
+                    <div class="block-founder__content">
+                        <div class="block-founder__left">
+                            <div class="block-founder__title">
+                                Art with soul.<br>
+                                Purpose with power.<br>
+                                A vision for women.
+                            </div>
+                            <div class="block-founder__image">
+                                <img loading="lazy" src="img/image8.webp" alt="">
+                                <div class="block-founder__text">
+                                    <div class="block-founder__name">
+                                        ELIZABETH FRIEDRICH
+                                        <span>FOUNDER</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-founder__right">
+                            <p>
+                                Through bold creative expression, international projects, and purpose-driven
+                                initiatives,
+                                she amplifies women’s voices and transforms creativity into meaningful impact.
+                            </p>
+                            <p>
+                                Founder of the powerful talk show platform Crossroads by Elizabeth Friedrich, and born
+                                in
+                                Armenia, a true resident of the world, her work blends elegance, depth, and social
+                                responsibility, shaping a new narrative where art inspires change.
+                            </p>
+                            <p>
+                                Driven by a belief that creativity carries responsibility, Elizabeth builds platforms
+                                that
+                                connect women, ideas, and cultures.
+                            </p>
+                            <p>
+                                From art and fashion to media and social initiatives, her work reflects a commitment to
+                                authenticity, leadership, and lasting influence. She continues to redefine modern
+                                creative
+                                leadership by placing purpose, women’s empowerment, and human connection at its core.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'blocks/sponsor.njk' %}
+
+        </main>
+        {% include 'blocks/footer.njk' %}
     </div>
+    {% include 'blocks/scripts.njk' %}
 </body>
-<style>
-    @charset "UTF-8";
-
-    *,
-    *::before,
-    *::after {
-        padding: 0px;
-        margin: 0px;
-        border: 0px;
-        box-sizing: border-box;
-    }
-
-    html,
-    body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        min-width: 320px;
-        width: 100%;
-        color: #2b2e33;
-        background-color: #fff;
-    }
-
-    body {
-        font-family: "Inter", sans-serif;
-        font-size: 100%;
-        line-height: 1;
-        font-size: 1rem;
-    }
-
-    a {
-        text-decoration: underline;
-        color: #2b2e33;
-    }
-
-    a:visited {
-        text-decoration: underline;
-        color: #2b2e33;
-    }
-
-    a:hover {
-        text-decoration: none;
-    }
-
-    ul li {
-        list-style: none;
-    }
-
-    img {
-        vertical-align: top;
-    }
-
-    .wrapper {
-        width: 100%;
-        min-height: 100%;
-        overflow: hidden;
-    }
-
-    .rootpage {
-        padding: 30px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    @media (max-width: 767px) {
-        .rootpage {
-            padding: 30px 15px;
-        }
-    }
-
-    .rootpage__list {
-        margin: 0px 0px 2.25rem 1.25rem;
-    }
-
-    .rootpage__list li:not(:last-child) {
-        margin: 0px 0px 15px 0px;
-    }
-</style>
 
 </html>
